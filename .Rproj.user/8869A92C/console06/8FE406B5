@@ -1,0 +1,122 @@
+]0;~/Desktop/Website/website[?1034hwireless-10-145-146-56:website ZixinYi$ [Kwireless-10-145-146-56:website ZixinYi$ git init
+Initialized empty Git repository in /Users/ZixinYi/Desktop/Website/website/.git/
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git config --global user.zy3299
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git commit -m "test commit"
+On branch master
+
+Initial commit
+
+Untracked files:
+	[31m.Rproj.user/[m
+	[31mconfig.toml[m
+	[31mcontent/[m
+	[31mdata/[m
+	[31mindex.Rmd[m
+	[31mpublic/[m
+	[31mstatic/[m
+	[31mthemes/[m
+	[31mwebsite.Rproj[m
+
+nothing added to commit but untracked files present
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote add origin https://github.com/zy3299/repo
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git push origin master
+error: src refspec master does not match any.
+error: failed to push some refs to 'https://github.com/zy3299/repo'
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git init
+Reinitialized existing Git repository in /Users/ZixinYi/Desktop/Website/website/.git/
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git add .
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git commit -m
+error: switch `m' requires a value
+usage: git commit [<options>] [--] <pathspec>...
+
+    -q, --quiet           suppress summary after successful commit
+    -v, --verbose         show diff in commit message template
+
+Commit message options
+    -F, --file <file>     read message from file
+    --author <author>     override author for commit
+    --date <date>         override date for commit
+    -m, --message <message>
+                          commit message
+    -c, --reedit-message <commit>
+                          reuse and edit message from specified commit
+    -C, --reuse-message <commit>
+                          reuse message from specified commit
+    --fixup <commit>      use autosquash formatted message to fixup specified commit
+    --squash <commit>     use autosquash formatted message to squash specified commit
+    --reset-author        the commit is authored by me now (used with -C/-c/--amend)
+    -s, --signoff         add Signed-off-by:
+    -t, --template <file>
+                          use specified template file
+    -e, --edit            force edit of commit
+    --cleanup <default>   how to strip spaces and #comments from message
+    --status              include status in commit message template
+    -S, --gpg-sign[=<key-id>]
+                          GPG sign commit
+
+Commit contents options
+    -a, --all             commit all changed files
+    -i, --include         add specified files to index for commit
+    --interactive         interactively add files
+    -p, --patch           interactively add changes
+    -o, --only            commit only specified files
+    -n, --no-verify       bypass pre-commit and commit-msg hooks
+    --dry-run             show what would be committed
+    --short               show status concisely
+    --branch              show branch information
+    --porcelain           machine-readable output
+    --long                show status in long format (default)
+    -z, --null            terminate entries with NUL
+    --amend               amend previous commit
+    --no-post-rewrite     bypass post-rewrite hook
+    -u, --untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ c[Kgit config --global.[K user.zy3299
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote add origin https://github.com/zy3299/repo
+fatal: remote origin already exists.
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git push origin master
+error: src refspec master does not match any.
+error: failed to push some refs to 'https://github.com/zy3299/repo'
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote add origin https://github.com/zy3299/repo.git
+fatal: remote origin already exists.
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote rm origin
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote add origin https://github.com/zy3299/repo.git
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git push origin master
+error: src refspec master does not match any.
+error: failed to push some refs to 'https://github.com/zy3299/repo.git'
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ 
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote add myorigin
+usage: git remote add [<options>] <name> <url>
+
+    -f, --fetch           fetch the remote branches
+    --tags                import all tags and associated objects when fetching
+                          or do not fetch any tag at all (--no-tags)
+    -t, --track <branch>  branch(es) to track
+    -m, --master <branch>
+                          master branch
+    --mirror[=<push|fetch>]
+                          set up remote as a mirror to push to or fetch from
+
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ push origin master[K[K[K[K[K[K[K[K[K[K[K[K[K[K myorigin master
+bash: push: command not found
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git push myorigin master
+error: src refspec master does not match any.
+error: failed to push some refs to 'myorigin'
+git remote rm m[Kmyorigin
+fatal: No such remote: myorigin
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git ro[Kemote add origin
+usage: git remote add [<options>] <name> <url>
+
+    -f, --fetch           fetch the remote branches
+    --tags                import all tags and associated objects when fetching
+                          or do not fetch any tag at all (--no-tags)
+    -t, --track <branch>  branch(es) to track
+    -m, --master <branch>
+                          master branch
+    --mirror[=<push|fetch>]
+                          set up remote as a mirror to push to or fetch from
+
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git init
+Reinitialized existing Git repository in /Users/ZixinYi/Desktop/Website/website/.git/
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git ad d[K[Kd .
