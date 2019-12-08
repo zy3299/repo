@@ -120,3 +120,204 @@ usage: git remote add [<options>] <name> <url>
 ]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git init
 Reinitialized existing Git repository in /Users/ZixinYi/Desktop/Website/website/.git/
 ]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git ad d[K[Kd .
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git commit -m
+error: switch `m' requires a value
+usage: git commit [<options>] [--] <pathspec>...
+
+    -q, --quiet           suppress summary after successful commit
+    -v, --verbose         show diff in commit message template
+
+Commit message options
+    -F, --file <file>     read message from file
+    --author <author>     override author for commit
+    --date <date>         override date for commit
+    -m, --message <message>
+                          commit message
+    -c, --reedit-message <commit>
+                          reuse and edit message from specified commit
+    -C, --reuse-message <commit>
+                          reuse message from specified commit
+    --fixup <commit>      use autosquash formatted message to fixup specified commit
+    --squash <commit>     use autosquash formatted message to squash specified commit
+    --reset-author        the commit is authored by me now (used with -C/-c/--amend)
+    -s, --signoff         add Signed-off-by:
+    -t, --template <file>
+                          use specified template file
+    -e, --edit            force edit of commit
+    --cleanup <default>   how to strip spaces and #comments from message
+    --status              include status in commit message template
+    -S, --gpg-sign[=<key-id>]
+                          GPG sign commit
+
+Commit contents options
+    -a, --all             commit all changed files
+    -i, --include         add specified files to index for commit
+    --interactive         interactively add files
+    -p, --patch           interactively add changes
+    -o, --only            commit only specified files
+    -n, --no-verify       bypass pre-commit and commit-msg hooks
+    --dry-run             show what would be committed
+    --short               show status concisely
+    --branch              show branch information
+    --porcelain           machine-readable output
+    --long                show status in long format (default)
+    -z, --null            terminate entries with NUL
+    --amend               amend previous commit
+    --no-post-rewrite     bypass post-rewrite hook
+    -u, --untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git congi[K[Kfig --global user [K.username[K[K[K[K[K[K[K[Kzy3299
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote [K[K[K[K[K[K[Kpush origin master
+error: src refspec master does not match any.
+error: failed to push some refs to 'https://github.com/zy3299/repo.git'
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git add [K[K[K[Kremote add origin heeps://github.com/zy3299/repo.git
+fatal: remote origin already exists.
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git push origin master
+error: src refspec master does not match any.
+error: failed to push some refs to 'https://github.com/zy3299/repo.git'
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote add my origin[K[K[K[K[K[K[K[Kyorigin
+usage: git remote add [<options>] <name> <url>
+
+    -f, --fetch           fetch the remote branches
+    --tags                import all tags and associated objects when fetching
+                          or do not fetch any tag at all (--no-tags)
+    -t, --track <branch>  branch(es) to track
+    -m, --master <branch>
+                          master branch
+    --mirror[=<push|fetch>]
+                          set up remote as a mirror to push to or fetch from
+
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git push myorigin master
+error: src refspec master does not match any.
+error: failed to push some refs to 'myorigin'
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git commit -m "initial commit"
+[master (root-commit) 37d29f4] initial commit
+ Committer: Zixin Yi <ZixinYi@wireless-10-145-146-56.public.utexas.edu>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 100 files changed, 9964 insertions(+)
+ create mode 100644 .Rproj.user/8869A92C/console06/8FE406B5
+ create mode 100644 .Rproj.user/8869A92C/console06/8FE406B5.env
+ create mode 100644 .Rproj.user/8869A92C/console06/INDEX001
+ create mode 100644 .Rproj.user/8869A92C/sources/prop/3F689BF
+ create mode 100644 .Rproj.user/8869A92C/sources/prop/INDEX
+ create mode 100644 .Rproj.user/shared/notebooks/patch-chunk-names
+ create mode 100644 .gitignore
+ create mode 100644 config.toml
+ create mode 100644 content/blog/2015-07-23-r-rmarkdown.Rmd
+ create mode 100644 content/blog/2015-07-23-r-rmarkdown.html
+ create mode 100644 content/blog/creating-a-new-theme.md
+ create mode 100644 content/blog/goisforlovers.md
+ create mode 100644 content/blog/hugoisforlovers.md
+ create mode 100644 content/blog/migrate-from-jekyll.md
+ create mode 100644 content/projects.md
+ create mode 100644 data/projects.yml
+ create mode 100644 index.Rmd
+ create mode 100644 public/404.html
+ create mode 100644 public/blog/2015-07-23-r-rmarkdown.Rmd
+ create mode 100644 public/blog/2015-07-23-r-rmarkdown/index.html
+ create mode 100644 public/blog/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png
+ create mode 100644 public/blog/creating-a-new-theme/index.html
+ create mode 100644 public/blog/goisforlovers/index.html
+ create mode 100644 public/blog/hugoisforlovers/index.html
+ create mode 100644 public/blog/index.html
+ create mode 100644 public/blog/index.xml
+ create mode 100644 public/blog/migrate-from-jekyll/index.html
+ create mode 100644 public/categories/development/index.html
+ create mode 100644 public/categories/development/index.xml
+ create mode 100644 public/categories/golang/index.html
+ create mode 100644 public/categories/golang/index.xml
+ create mode 100644 public/categories/index.html
+ create mode 100644 public/categories/index.xml
+ create mode 100644 public/categories/projects/index.html
+ create mode 100644 public/categories/projects/index.xml
+ create mode 100644 public/categories/r/index.html
+ create mode 100644 public/categories/r/index.xml
+ create mode 100644 public/css/main.css
+ create mode 100644 public/img/profile.png
+ create mode 100644 public/index.html
+ create mode 100644 public/index.xml
+ create mode 100644 public/js/docs.min.js
+ create mode 100644 public/js/ie10-viewport-bug-workaround.js
+ create mode 100644 public/js/main.js
+ create mode 100644 public/projects/index.html
+ create mode 100644 public/sitemap.xml
+ create mode 100644 public/tags/development/index.html
+ create mode 100644 public/tags/development/index.xml
+ create mode 100644 public/tags/go/index.html
+ create mode 100644 public/tags/go/index.xml
+ create mode 100644 public/tags/golang/index.html
+ create mode 100644 public/tags/golang/index.xml
+ create mode 100644 public/tags/hugo/index.html
+ create mode 100644 public/tags/hugo/index.xml
+ create mode 100644 public/tags/index.html
+ create mode 100644 public/tags/index.xml
+ create mode 100644 public/tags/plot/index.html
+ create mode 100644 public/tags/plot/index.xml
+ create mode 100644 public/tags/projects/index.html
+ create mode 100644 public/tags/projects/index.xml
+ create mode 100644 public/tags/r-markdown/index.html
+ create mode 100644 public/tags/r-markdown/index.xml
+ create mode 100644 public/tags/regression/index.html
+ create mode 100644 public/tags/regression/index.xml
+ create mode 100644 public/tags/templates/index.html
+ create mode 100644 public/tags/templates/index.xml
+ create mode 100644 public/tags/themes/index.html
+ create mode 100644 public/tags/themes/index.xml
+ create mode 100644 static/blog/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png
+ create mode 100644 static/img/profile.png
+ create mode 100644 themes/hugo-sustain/LICENSE.md
+ create mode 100644 themes/hugo-sustain/README.md
+ create mode 100644 themes/hugo-sustain/archetypes/default.md
+ create mode 100644 themes/hugo-sustain/exampleSite/config.toml
+ create mode 100644 themes/hugo-sustain/exampleSite/content/blog/creating-a-new-theme.md
+ create mode 100644 themes/hugo-sustain/exampleSite/content/blog/goisforlovers.md
+ create mode 100644 themes/hugo-sustain/exampleSite/content/blog/hugoisforlovers.md
+ create mode 100644 themes/hugo-sustain/exampleSite/content/blog/migrate-from-jekyll.md
+ create mode 100644 themes/hugo-sustain/exampleSite/content/projects.md
+ create mode 100644 themes/hugo-sustain/exampleSite/data/projects.yml
+ create mode 100644 themes/hugo-sustain/exampleSite/static/img/profile.png
+ create mode 100644 themes/hugo-sustain/images/screenshot.png
+ create mode 100644 themes/hugo-sustain/images/tn.png
+ create mode 100644 themes/hugo-sustain/layouts/404.html
+ create mode 100644 themes/hugo-sustain/layouts/_default/list.html
+ create mode 100644 themes/hugo-sustain/layouts/_default/projects.html
+ create mode 100644 themes/hugo-sustain/layouts/_default/single.html
+ create mode 100644 themes/hugo-sustain/layouts/index.html
+ create mode 100644 themes/hugo-sustain/layouts/partials/disqus.html
+ create mode 100644 themes/hugo-sustain/layouts/partials/footer.html
+ create mode 100644 themes/hugo-sustain/layouts/partials/head.html
+ create mode 100644 themes/hugo-sustain/layouts/partials/header.html
+ create mode 100644 themes/hugo-sustain/layouts/partials/js.html
+ create mode 100644 themes/hugo-sustain/layouts/partials/social.html
+ create mode 100644 themes/hugo-sustain/static/css/main.css
+ create mode 100644 themes/hugo-sustain/static/js/docs.min.js
+ create mode 100644 themes/hugo-sustain/static/js/ie10-viewport-bug-workaround.js
+ create mode 100644 themes/hugo-sustain/static/js/main.js
+ create mode 100644 themes/hugo-sustain/theme.toml
+ create mode 100644 website.Rproj
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git push origin master
+To https://github.com/zy3299/repo.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/zy3299/repo.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ rm -rf wes[Kbsite
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ rm -f[Krf repo
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git init
+Reinitialized existing Git repository in /Users/ZixinYi/Desktop/Website/website/.git/
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git add .
