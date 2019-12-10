@@ -1,0 +1,79 @@
+Name,AptamerChemistry,Target,Length,Affinity,MW
+5TRG2,RNA,MUC1-5TR-GalNAc,70,18.6,
+DL650-E3,RNA,PC-3,33,146,
+AF12505,Peptide,Thrombopoietin Receptor,14,2,1754.06
+MMS_105,Peptide,Bacilus anthracis,15,19.1,1967.27
+Anti Aflatoxin M1,DNA,Aflatoxin M1,21,0.0182,6380.23
+Mercury II,DNA,Mercury II,22,40,6590.34
+GRK2,RNA,G protein,28,1.2,9062.59
+Sulforhodamine B,DNA,Sulforhodamine B,29,190,9155.94
+TD05.17,Chimeric,Leukemia,37,43,10256.7
+Osteopontin,RNA,Human Osteopontin,40,18,12862.72
+CCRF-CEM,DNA,Acute lymphoblastic leukemia_,41,0.78,12634.26
+Oligo 569,RNA,Mous Lipocalin-2,42,340,13405.11
+Anti-IgE Aptamer,DNA,lgE,45,36,13758.86
+Digoxin,DNA,Digoxin,50,0.05,15635.16
+A10,RNA,Gonadoliberin,50,190,46731.86
+Interferon-gemma,RNA,Interferon-gamma,60,3,18001.76
+60-mer S42,DNA,Gonadoliberin,60,45,48667.48
+Ochratoxin A,DNA,Ochratoxin A,66,96,20569.34
+Clone 2,RNA,Protein E,66,1.2,20369.18
+Bovine Thrombin,RNA,Bovine Thrombin,68,164,21852.22
+Heparanase,DNA,Heparanase,72,12,22240.55
+Influenza A virus H3N2,RNA,Influenza A virus H3N2,74,0.188,23621.16
+Tetracycline,DNA,Tetracycline,76,64.6,23367.05
+VWF R9.3,RNA,von Willebrand Factor,76,1.2,24492.61
+Bovine Catalase,DNA,Bovine Catalase,82,237,25356.41
+HER-2,DNA,HER2 peptide,86,18.9,26271.12
+Fibrinogen,DNA,Fibrinogen,90,63.8,27523.83
+Neuropeptide Y,RNA,Neuropeptide Y,90,370,45033.34
+Anti-EGFR,RNA,hEGFR,93,2.4,29987.87
+ERK1/2,RNA,ERK 1/2,109,4.7,25091.26
+B23 LH aptamer,RNA,lteinising hormone,35,321,
+1-F,DNA,CD 117,79,4.24,
+SGQ,DNA,beta-conglutin,11,0.58,3509.33
+Endothelial Cells,Peptide,Aminopeptidase N,12,2.2,319.43
+EphA2 Receptor,Peptide,EphA2 Receptor,12,186,1483.71
+E-Selectin,Peptide,E-Selectin,12,4,1699.99
+Thrombin,DNA,Thrombin,15,110,4726.13
+AIR-3A,RNA,Cells presenting IL-6R,19,8.5,6307.88
+B22-19,DNA,HIV1 TAR RNA Hairpin Loop,19,50,5659.71
+Ampicillin 17,DNA,Ampicillin,19,13.4,5940.9
+Ampicillin 18,DNA,Ampicillin,19,9.8,5895.91
+Peroxidase DNAzyme,DNA,Hemin,20,29,6349.19
+EpCAM,RNA,Cancer Stem Cell,20,54.5,6392.85
+Ampicillin 4,DNA,Ampicillin,21,9.4,6519.26
+IgG,Chimeric,hlgG-Fc,23,90.9,7224.54
+TNFa,DNA,TNFa,25,7,7788.1
+Nickel,RNA,Nickel,89,800,28782.5
+1G8-14,RNA,Ebola virus inhibitory domain,230,3.7,22934.2
+2F11-14,RNA,Ebola virus inhibitory domain,248,7.1,5439.76
+L-Arginine,RNA,L-Arginine,97,330,31347.87
+NF-kappa B,RNA,NF-kappa B,97,1,31122.71
+L-tryptophan,RNA,L-tryptophan,104,15,33718.43
+Colicin E3,RNA,Colicin E3,121,2,38734.22
+Sialyl Lewis X,RNA,Sialyl Lewis X,133,0.085,42804.72
+D-Tryptophan,RNA,D-Tryptophan,153,18,49445.7
+Ky2 Aptamer,DNA,Kanamycin,21,78.8,6567.32
+T-SO508,DNA,a-synuclein oligomers,24,68,7528.9
+VEGF-121,DNA,VEGF-121,25,1.1,7900.16
+StrepApt5,DNA,Streptavidin,26,35,7957.19
+StrepApt2,DNA,Streptavidin,29,77,8864.76
+Rnase H1,DNA,Rnase H1,39,11,12149.88
+ASPV,DNA,MT32 coat protein,40,55,12619.23
+Cellobiose,DNA,Cellobiose,41,600,12988.4
+hVap1_Stem,DNA,VEGF-121,48,5.6,14775.61
+Antibac 1,DNA,Peptidoglycan,55,268.5,16833.83
+Pb(II),DNA,Pb(II),56,4,1727.28
+PAI-1 01,DNA,Plasminogen Activator Inhibitor -1 ,60,339,18766.23
+Ochratoxin A,DNA,Ochratoxin A,66,96,20569.34
+CRP,DNA,CRP,80,3.51,22571.71
+Hemoglobin Aptamer,DNA,Hemoglobin,72,7.6,22553.68
+U31,DNA,U87-EGFRvlll,76,8.1,23503.34
+ACG03,DNA,HGC-27,78,16.49,24321.75
+PCB72,DNA,PCB 72,80,66,24336.74
+Aptamer 25,DNA,Human norovirus,81,232,24864.21
+Streptavidin,DNA,Sreptavidin,96,56.7,29413.16
+8-OHdG,DNA,8-OHdG,121,0.1,37780.41
+EGFR,RNA,EGFR,39,10,12561.44
+OSM,RNA,Human Onscostatin M,70,7,22572.51

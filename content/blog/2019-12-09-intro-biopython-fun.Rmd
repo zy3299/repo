@@ -1,0 +1,87 @@
+---
+title: Intro BioPython Fun
+author: Zixin Yi
+date: '2019-12-09'
+slug: intro-biopython-fun
+categories: []
+tags: []
+description: ''
+---
+#### Restriction Enzyme Split
+
+In the following string, using re.findall(), match restriction enzyme binding sites ANTAAT and GCRWTG.Note that per the IUPAC nucleotide code, N is any base, R is A or G, W is A or T
+
+```{python}
+string="ATGGCAATAACCCCCCGTTTCTACTTCTAGAGGAGAAAAGTATTGACATGAGCGCTCCCGGCACAAGGGCCAAAGAAGTCTCCAATTTCTTATTTCCGAATGACATGCGTCTCCTTGCGGGTAAATCACCGACCGCAATTCATAGAAGCCTGGGGGAACAGATAGGTCTAATTAGCTTAAGAGAGTAAATCCTGGGATCATTCAGTAGTAACCATAAACTTACGCTGGGGCTTCTTCGGCGGATTTTTACAGTTACCAACCAGGAGATTTGAAGTAAATCAGTTGAGGATTTAGCCGCGCTATCCGGTAATCTCCAAATTAAAACATACCGTTCCATGAAGGCTAGAATTACTTACCGGCCTTTTCCATGCCTGCGCTATACCCCCCCACTCTCCCGCTTATCCGTCCGAGCGGAGGCAGTGCGATCCTCCGTTAAGATATTCTTACGTGTGACGTAGCTATGTATTTTGCAGAGCTGGCGAACGCGTTGAACACTTCACAGATGGTAGGGATTCGGGTAAAGGGCGTATAATTGGGGACTAACATAGGCGTAGACTACGATGGCGCCAACTCAATCGCAGCTCGAGCGCCCTGAATAACGTACTCATCTCAACTCATTCTCGGCAATCTACCGAGCGACTCGATTATCAACGGCTGTCTAGCAGTTCTAATCTTTTGCCAGCATCGTAATAGCCTCCAAGAGATTGATGATAGCTATCGGCACAGAACTGAGACGGCGCCGATGGATAGCGGACTTTCGGTCAACCACAATTCCCCACGGGACAGGTCCTGCGGTGCGCATCACTCTGAATGTACAAGCAACCCAAGTGGGCCGAGCCTGGACTCAGCTGGTTCCTGCGTGAGCTCGAGACTCGGGATGACAGCTCTTTAAACATAGAGCGGGGGCGTCGAACGGTCGAGAAAGTCATAGTACCTCGGGTACCAACTTACTCAGGTTATTGCTTGAAGCTGTACTATTTTAGGGGGGGAGCGCTGAAGGTCTCTTCTTCTCATGACTGAACTCGCGAGGGTCGTGAAGTCGGTTCCTTCAATGGTTAAAAAACAAAGGCTTACTGTGCGCAGAGGAACGCCCATCTAGCGGCTGGCGTCTTGAATGCTCGGTCCCCTTTGTCATTCCGGATTAATCCATTTCCCTCATTCACGAGCTTGCGAAGTCTACATTGGTATATGAATGCGACCTAGAAGAGGGCGCTTAAAATTGGCAGTGGTTGATGCTCTAAACTCCATTTGGTTTACTCGTGCATCACCGCGATAGGCTGACAAAGGTTTAACATTGAATAGCAAGGCACTTCCGGTCTCAATGAACGGCCGGGAAAGGTACGCGCGCGGTATGGGAGGATCAAGGGGCCAATAGAGAGGCTCCTCTCTCACTCGCTAGGAGGCAAATGTAAAACAATGGTTACTGCATCGATACATAAAACATGTCCATCGGTTGCCCAAAGTGTTAAGTGTCTATCACCCCTAGGGCCGTTTCCCGCATATAAACGCCAGGTTGTATCCGCATTTGATGCTACCGTGGATGAGTCTGCGTCGAGCGCGCCGCACGAATGTTGCAATGTATTGCATGAGTAGGGTTGACTAAGAGCCGTTAGATGCGTCGCTGTACTAATAGTTGTCGACAGACCGTCGAGATTAGAAAATGGTACCAGCATTTTCGGAGGTTCTCTAACTAGTATGGATTGCGGTGTCTTCACTGTGCTGCGGCTACCCATCGCCTGAAATCCAGCTGGTGTCAAGCCATCCCCTCTCCGGGACGCCGCATGTAGTGAAACATATACGTTGCACGGGTTCACCGCGGTCCGTTCTGAGTCGACCAAGGACACAATCGAGCTCCGATCCGTACCCTCGACAAACTTGTACCCGACCCCCGGAGCTTGCCAGCTCCTCGGGTATCATGGAGCCTGTGGTTCATCGCGTCCGATATCAAACTTCGTCATGATAAAGTCCCCCCCTCGGGAGTACCAGAGAAGATGACTACTGAGTTGTGCGAT"
+```
+
+How many cuts total in the sequence do you expect if you digest with both of these restriction enzymes? How many fragments do you expect?
+
+```{python}
+import re
+re.findall(r"A.TAAT|GC[^CT][^CG]TG",string)
+```
+
+*Four cuts in total so that five fragments would be expected.*
+
+Assume the restriction enzymes cut the sequence (string, above) at the midpoint of the binding site , so ANT\ATT and GCR\WTG. Using re.split(), cut the sequence at the cut points to digest the sequence, yielding the correct fragments. You might find that two separate re.split() commands is the easier way to go, but this my require a loop. Once you have the correct fragments, then use the count_chars() function from class to count the number of each base in each fragment. Modify it to additionally report the total length of each fragment.
+
+```{python}
+#split by restriction enzymes
+stringa=re.sub(r"(A.TAAT|GC[^CT][^CG]TG)",r"\1@",string)
+stringb=re.sub(r"ATG@","@ATG",stringa)
+stringc=re.sub(r"TTG@","@TTG",stringb)
+stringd=re.sub(r"AAT@","@AAT",stringc)
+string_frag=re.split("@",stringd)
+print(string_frag)
+```
+
+```{python}
+#count characters
+def count_chars(sentence): 
+     counts = {} 
+     for c in sentence: 
+         if c in counts: 
+            counts[c]+=1 
+         else:
+             counts[c]=1 
+     for c in counts:
+         print(c, "appears", counts[c],"times")
+
+def count_total(sentence):
+    total=0
+    for letter in sentence:  
+        total+=1 
+    print("This fragment has",total,"units in total" )
+```
+
+```{python}
+#count fragment 1
+count_chars(string_frag[0])
+count_total(string_frag[0])
+```
+
+```{python}
+#count fragment 2
+count_chars(string_frag[1])
+count_total(string_frag[1])
+```
+
+```{python}
+#count fragment 3
+count_chars(string_frag[2])
+count_total(string_frag[2])
+```
+
+```{python}
+#count fragment 4
+count_chars(string_frag[3])
+count_total(string_frag[3])
+```
+
+```{python}
+#count fragment 5
+count_chars(string_frag[4])
+count_total(string_frag[4])
+```
+

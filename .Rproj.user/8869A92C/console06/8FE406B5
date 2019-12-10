@@ -321,3 +321,290 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git init
 Reinitialized existing Git repository in /Users/ZixinYi/Desktop/Website/website/.git/
 ]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git add .
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git commit -m
+error: switch `m' requires a value
+usage: git commit [<options>] [--] <pathspec>...
+
+    -q, --quiet           suppress summary after successful commit
+    -v, --verbose         show diff in commit message template
+
+Commit message options
+    -F, --file <file>     read message from file
+    --author <author>     override author for commit
+    --date <date>         override date for commit
+    -m, --message <message>
+                          commit message
+    -c, --reedit-message <commit>
+                          reuse and edit message from specified commit
+    -C, --reuse-message <commit>
+                          reuse message from specified commit
+    --fixup <commit>      use autosquash formatted message to fixup specified commit
+    --squash <commit>     use autosquash formatted message to squash specified commit
+    --reset-author        the commit is authored by me now (used with -C/-c/--amend)
+    -s, --signoff         add Signed-off-by:
+    -t, --template <file>
+                          use specified template file
+    -e, --edit            force edit of commit
+    --cleanup <default>   how to strip spaces and #comments from message
+    --status              include status in commit message template
+    -S, --gpg-sign[=<key-id>]
+                          GPG sign commit
+
+Commit contents options
+    -a, --all             commit all changed files
+    -i, --include         add specified files to index for commit
+    --interactive         interactively add files
+    -p, --patch           interactively add changes
+    -o, --only            commit only specified files
+    -n, --no-verify       bypass pre-commit and commit-msg hooks
+    --dry-run             show what would be committed
+    --short               show status concisely
+    --branch              show branch information
+    --porcelain           machine-readable output
+    --long                show status in long format (default)
+    -z, --null            terminate entries with NUL
+    --amend               amend previous commit
+    --no-post-rewrite     bypass post-rewrite hook
+    -u, --untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git config --global user [K.zu[Ky332[K[K299
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote add origin https://github.com/zy3299/repo.git
+fatal: remote origin already exists.
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git commit -m "first commit"
+[master 4d7cff1] first commit
+ Committer: Zixin Yi <ZixinYi@wireless-10-145-146-56.public.utexas.edu>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 202 insertions(+), 1 deletion(-)
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git remote add origin https://github.com/zy3299/repo.git
+fatal: remote origin already exists.
+]0;~/Desktop/Website/websitewireless-10-145-146-56:website ZixinYi$ git push -u origin master
+Counting objects: 150, done.
+Delta compression using up to 4 threads.
+Compressing objects:   0% (1/129)   Compressing objects:   1% (2/129)   Compressing objects:   2% (3/129)   Compressing objects:   3% (4/129)   Compressing objects:   4% (6/129)   Compressing objects:   5% (7/129)   Compressing objects:   6% (8/129)   Compressing objects:   7% (10/129)   Compressing objects:   8% (11/129)   Compressing objects:   9% (12/129)   Compressing objects:  10% (13/129)   Compressing objects:  11% (15/129)   Compressing objects:  12% (16/129)   Compressing objects:  13% (17/129)   Compressing objects:  14% (19/129)   Compressing objects:  15% (20/129)   Compressing objects:  16% (21/129)   Compressing objects:  17% (22/129)   Compressing objects:  18% (24/129)   Compressing objects:  19% (25/129)   Compressing objects:  20% (26/129)   Compressing objects:  21% (28/129)   Compressing objects:  22% (29/129)   Compressing objects:  23% (30/129)   Compressing objects:  24% (31/129)   Compressing objects:  25% (33/129)   Compressing objects:  26% (34/129)   Compressing objects:  27% (35/129)   Compressing objects:  28% (37/129)   Compressing objects:  29% (38/129)   Compressing objects:  30% (39/129)   Compressing objects:  31% (40/129)   Compressing objects:  32% (42/129)   Compressing objects:  33% (43/129)   Compressing objects:  34% (44/129)   Compressing objects:  35% (46/129)   Compressing objects:  36% (47/129)   Compressing objects:  37% (48/129)   Compressing objects:  38% (50/129)   Compressing objects:  39% (51/129)   Compressing objects:  40% (52/129)   Compressing objects:  41% (53/129)   Compressing objects:  42% (55/129)   Compressing objects:  43% (56/129)   Compressing objects:  44% (57/129)   Compressing objects:  45% (59/129)   Compressing objects:  46% (60/129)   Compressing objects:  47% (61/129)   Compressing objects:  48% (62/129)   Compressing objects:  49% (64/129)   Compressing objects:  50% (65/129)   Compressing objects:  51% (66/129)   Compressing objects:  52% (68/129)   Compressing objects:  53% (69/129)   Compressing objects:  54% (70/129)   Compressing objects:  55% (71/129)   Compressing objects:  56% (73/129)   Compressing objects:  57% (74/129)   Compressing objects:  58% (75/129)   Compressing objects:  59% (77/129)   Compressing objects:  60% (78/129)   Compressing objects:  61% (79/129)   Compressing objects:  62% (80/129)   Compressing objects:  63% (82/129)   Compressing objects:  64% (83/129)   Compressing objects:  65% (84/129)   Compressing objects:  66% (86/129)   Compressing objects:  67% (87/129)   Compressing objects:  68% (88/129)   Compressing objects:  69% (90/129)   Compressing objects:  70% (91/129)   Compressing objects:  71% (92/129)   Compressing objects:  72% (93/129)   Compressing objects:  73% (95/129)   Compressing objects:  74% (96/129)   Compressing objects:  75% (97/129)   Compressing objects:  76% (99/129)   Compressing objects:  77% (100/129)   Compressing objects:  78% (101/129)   Compressing objects:  79% (102/129)   Compressing objects:  80% (104/129)   Compressing objects:  81% (105/129)   Compressing objects:  82% (106/129)   Compressing objects:  83% (108/129)   Compressing objects:  84% (109/129)   Compressing objects:  85% (110/129)   Compressing objects:  86% (111/129)   Compressing objects:  87% (113/129)   Compressing objects:  88% (114/129)   Compressing objects:  89% (115/129)   Compressing objects:  90% (117/129)   Compressing objects:  91% (118/129)   Compressing objects:  92% (119/129)   Compressing objects:  93% (120/129)   Compressing objects:  94% (122/129)   Compressing objects:  95% (123/129)   Compressing objects:  96% (124/129)   Compressing objects:  97% (126/129)   Compressing objects:  98% (127/129)   Compressing objects:  99% (128/129)   Compressing objects: 100% (129/129)   Compressing objects: 100% (129/129), done.
+Writing objects:   0% (1/150)   Writing objects:   1% (2/150)   Writing objects:   2% (3/150)   Writing objects:   3% (5/150)   Writing objects:   4% (6/150)   Writing objects:   5% (8/150)   Writing objects:   6% (9/150)   Writing objects:   7% (11/150)   Writing objects:   8% (12/150)   Writing objects:   9% (14/150)   Writing objects:  10% (15/150)   Writing objects:  11% (17/150)   Writing objects:  12% (19/150)   Writing objects:  13% (20/150)   Writing objects:  14% (21/150)   Writing objects:  15% (23/150)   Writing objects:  16% (24/150)   Writing objects:  17% (26/150)   Writing objects:  18% (28/150)   Writing objects:  19% (29/150)   Writing objects:  20% (30/150)   Writing objects:  21% (32/150)   Writing objects:  22% (33/150)   Writing objects:  23% (35/150)   Writing objects:  24% (36/150)   Writing objects:  26% (39/150)   Writing objects:  27% (41/150)   Writing objects:  28% (42/150)   Writing objects:  29% (44/150)   Writing objects:  30% (45/150)   Writing objects:  31% (47/150)   Writing objects:  32% (49/150)   Writing objects:  33% (50/150)   Writing objects:  34% (51/150)   Writing objects:  35% (53/150)   Writing objects:  36% (54/150)   Writing objects:  37% (56/150)   Writing objects:  38% (57/150)   Writing objects:  39% (59/150)   Writing objects:  40% (60/150)   Writing objects:  42% (63/150)   Writing objects:  43% (65/150)   Writing objects:  44% (66/150)   Writing objects:  45% (68/150)   Writing objects:  46% (69/150)   Writing objects:  47% (71/150)   Writing objects:  48% (72/150)   Writing objects:  49% (74/150)   Writing objects:  50% (75/150)   Writing objects:  51% (77/150)   Writing objects:  52% (78/150)   Writing objects:  53% (80/150)   Writing objects:  54% (81/150)   Writing objects:  55% (83/150)   Writing objects:  56% (84/150)   Writing objects:  57% (86/150)   Writing objects:  58% (87/150)   Writing objects:  59% (89/150)   Writing objects:  60% (90/150)   Writing objects:  61% (92/150)   Writing objects:  62% (93/150)   Writing objects:  63% (95/150)   Writing objects:  64% (96/150)   Writing objects:  65% (98/150)   Writing objects:  66% (99/150)   Writing objects:  67% (101/150)   Writing objects:  68% (102/150)   Writing objects:  69% (104/150)   Writing objects:  70% (105/150)   Writing objects:  71% (107/150)   Writing objects:  72% (108/150)   Writing objects:  73% (110/150)   Writing objects:  74% (111/150)   Writing objects:  75% (113/150)   Writing objects:  76% (114/150)   Writing objects:  77% (116/150)   Writing objects:  78% (117/150)   Writing objects:  79% (119/150)   Writing objects:  80% (120/150)   Writing objects:  81% (122/150)   Writing objects:  82% (123/150)   Writing objects:  83% (125/150)   Writing objects:  84% (126/150)   Writing objects:  85% (128/150)   Writing objects:  86% (129/150)   Writing objects:  87% (131/150)   Writing objects:  88% (132/150)   Writing objects:  89% (134/150)   Writing objects:  90% (135/150)   Writing objects:  91% (137/150)   Writing objects:  92% (138/150)   Writing objects:  93% (140/150)   Writing objects:  94% (141/150)   Writing objects:  95% (143/150)   Writing objects:  96% (144/150)   Writing objects:  97% (146/150)   Writing objects:  98% (147/150)   Writing objects:  99% (149/150)   Writing objects: 100% (150/150)   Writing objects: 100% (150/150), 505.20 KiB | 0 bytes/s, done.
+Total 150 (delta 43), reused 0 (delta 0)
+remote: Resolving deltas:   2% (1/43)[Kremote: Resolving deltas:   4% (2/43)[Kremote: Resolving deltas:   6% (3/43)[Kremote: Resolving deltas:   9% (4/43)[Kremote: Resolving deltas:  11% (5/43)[Kremote: Resolving deltas:  13% (6/43)[Kremote: Resolving deltas:  16% (7/43)[Kremote: Resolving deltas:  18% (8/43)[Kremote: Resolving deltas:  48% (21/43)[Kremote: Resolving deltas:  53% (23/43)[Kremote: Resolving deltas:  55% (24/43)[Kremote: Resolving deltas:  76% (33/43)[Kremote: Resolving deltas:  90% (39/43)[Kremote: Resolving deltas: 100% (43/43)[Kremote: Resolving deltas: 100% (43/43), done.[K
+To https://github.com/zy3299/repo.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+[KZixins-MacBook:website ZixinYi$ git push origin master
+Everything up-to-date
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git push origin master
+Everything up-to-date
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git init
+Reinitialized existing Git repository in /Users/ZixinYi/Desktop/Website/website/.git/
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git add.[K .
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git commit -m
+error: switch `m' requires a value
+usage: git commit [<options>] [--] <pathspec>...
+
+    -q, --quiet           suppress summary after successful commit
+    -v, --verbose         show diff in commit message template
+
+Commit message options
+    -F, --file <file>     read message from file
+    --author <author>     override author for commit
+    --date <date>         override date for commit
+    -m, --message <message>
+                          commit message
+    -c, --reedit-message <commit>
+                          reuse and edit message from specified commit
+    -C, --reuse-message <commit>
+                          reuse message from specified commit
+    --fixup <commit>      use autosquash formatted message to fixup specified commit
+    --squash <commit>     use autosquash formatted message to squash specified commit
+    --reset-author        the commit is authored by me now (used with -C/-c/--amend)
+    -s, --signoff         add Signed-off-by:
+    -t, --template <file>
+                          use specified template file
+    -e, --edit            force edit of commit
+    --cleanup <default>   how to strip spaces and #comments from message
+    --status              include status in commit message template
+    -S, --gpg-sign[=<key-id>]
+                          GPG sign commit
+
+Commit contents options
+    -a, --all             commit all changed files
+    -i, --include         add specified files to index for commit
+    --interactive         interactively add files
+    -p, --patch           interactively add changes
+    -o, --only            commit only specified files
+    -n, --no-verify       bypass pre-commit and commit-msg hooks
+    --dry-run             show what would be committed
+    --short               show status concisely
+    --branch              show branch information
+    --porcelain           machine-readable output
+    --long                show status in long format (default)
+    -z, --null            terminate entries with NUL
+    --amend               amend previous commit
+    --no-post-rewrite     bypass post-rewrite hook
+    -u, --untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git remote add origin 
+usage: git remote add [<options>] <name> <url>
+
+    -f, --fetch           fetch the remote branches
+    --tags                import all tags and associated objects when fetching
+                          or do not fetch any tag at all (--no-tags)
+    -t, --track <branch>  branch(es) to track
+    -m, --master <branch>
+                          master branch
+    --mirror[=<push|fetch>]
+                          set up remote as a mirror to push to or fetch from
+
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git push origin master
+Counting objects: 150, done.
+Delta compression using up to 4 threads.
+Compressing objects:   0% (1/129)   Compressing objects:   1% (2/129)   Compressing objects:   2% (3/129)   Compressing objects:   3% (4/129)   Compressing objects:   4% (6/129)   Compressing objects:   5% (7/129)   Compressing objects:   6% (8/129)   Compressing objects:   7% (10/129)   Compressing objects:   8% (11/129)   Compressing objects:   9% (12/129)   Compressing objects:  10% (13/129)   Compressing objects:  11% (15/129)   Compressing objects:  12% (16/129)   Compressing objects:  13% (17/129)   Compressing objects:  14% (19/129)   Compressing objects:  15% (20/129)   Compressing objects:  16% (21/129)   Compressing objects:  17% (22/129)   Compressing objects:  18% (24/129)   Compressing objects:  19% (25/129)   Compressing objects:  20% (26/129)   Compressing objects:  21% (28/129)   Compressing objects:  22% (29/129)   Compressing objects:  23% (30/129)   Compressing objects:  24% (31/129)   Compressing objects:  25% (33/129)   Compressing objects:  26% (34/129)   Compressing objects:  27% (35/129)   Compressing objects:  28% (37/129)   Compressing objects:  29% (38/129)   Compressing objects:  30% (39/129)   Compressing objects:  31% (40/129)   Compressing objects:  32% (42/129)   Compressing objects:  33% (43/129)   Compressing objects:  34% (44/129)   Compressing objects:  35% (46/129)   Compressing objects:  36% (47/129)   Compressing objects:  37% (48/129)   Compressing objects:  38% (50/129)   Compressing objects:  39% (51/129)   Compressing objects:  40% (52/129)   Compressing objects:  41% (53/129)   Compressing objects:  42% (55/129)   Compressing objects:  43% (56/129)   Compressing objects:  44% (57/129)   Compressing objects:  45% (59/129)   Compressing objects:  46% (60/129)   Compressing objects:  47% (61/129)   Compressing objects:  48% (62/129)   Compressing objects:  49% (64/129)   Compressing objects:  50% (65/129)   Compressing objects:  51% (66/129)   Compressing objects:  52% (68/129)   Compressing objects:  53% (69/129)   Compressing objects:  54% (70/129)   Compressing objects:  55% (71/129)   Compressing objects:  56% (73/129)   Compressing objects:  57% (74/129)   Compressing objects:  58% (75/129)   Compressing objects:  59% (77/129)   Compressing objects:  60% (78/129)   Compressing objects:  61% (79/129)   Compressing objects:  62% (80/129)   Compressing objects:  63% (82/129)   Compressing objects:  64% (83/129)   Compressing objects:  65% (84/129)   Compressing objects:  66% (86/129)   Compressing objects:  67% (87/129)   Compressing objects:  68% (88/129)   Compressing objects:  69% (90/129)   Compressing objects:  70% (91/129)   Compressing objects:  71% (92/129)   Compressing objects:  72% (93/129)   Compressing objects:  73% (95/129)   Compressing objects:  74% (96/129)   Compressing objects:  75% (97/129)   Compressing objects:  76% (99/129)   Compressing objects:  77% (100/129)   Compressing objects:  78% (101/129)   Compressing objects:  79% (102/129)   Compressing objects:  80% (104/129)   Compressing objects:  81% (105/129)   Compressing objects:  82% (106/129)   Compressing objects:  83% (108/129)   Compressing objects:  84% (109/129)   Compressing objects:  85% (110/129)   Compressing objects:  86% (111/129)   Compressing objects:  87% (113/129)   Compressing objects:  88% (114/129)   Compressing objects:  89% (115/129)   Compressing objects:  90% (117/129)   Compressing objects:  91% (118/129)   Compressing objects:  92% (119/129)   Compressing objects:  93% (120/129)   Compressing objects:  94% (122/129)   Compressing objects:  95% (123/129)   Compressing objects:  96% (124/129)   Compressing objects:  97% (126/129)   Compressing objects:  98% (127/129)   Compressing objects:  99% (128/129)   Compressing objects: 100% (129/129)   Compressing objects: 100% (129/129), done.
+Writing objects:   0% (1/150)   Writing objects:   1% (2/150)   Writing objects:   2% (3/150)   Writing objects:   3% (5/150)   Writing objects:   4% (6/150)   Writing objects:   5% (8/150)   Writing objects:   6% (9/150)   Writing objects:   7% (11/150)   Writing objects:   8% (12/150)   Writing objects:   9% (14/150)   Writing objects:  10% (15/150)   Writing objects:  11% (17/150)   Writing objects:  12% (19/150)   Writing objects:  13% (20/150)   Writing objects:  14% (21/150)   Writing objects:  15% (23/150)   Writing objects:  16% (24/150)   Writing objects:  17% (26/150)   Writing objects:  18% (28/150)   Writing objects:  19% (29/150)   Writing objects:  20% (30/150)   Writing objects:  21% (32/150)   Writing objects:  22% (33/150)   Writing objects:  23% (35/150)   Writing objects:  24% (36/150)   Writing objects:  26% (39/150)   Writing objects:  27% (41/150)   Writing objects:  28% (42/150)   Writing objects:  29% (44/150)   Writing objects:  30% (45/150)   Writing objects:  31% (47/150)   Writing objects:  32% (49/150)   Writing objects:  33% (50/150)   Writing objects:  34% (51/150)   Writing objects:  35% (53/150)   Writing objects:  36% (54/150)   Writing objects:  37% (56/150)   Writing objects:  38% (57/150)   Writing objects:  39% (59/150)   Writing objects:  40% (60/150)   Writing objects:  42% (63/150)   Writing objects:  43% (65/150)   Writing objects:  44% (66/150)   Writing objects:  45% (68/150)   Writing objects:  46% (69/150)   Writing objects:  47% (71/150)   Writing objects:  48% (72/150)   Writing objects:  49% (74/150)   Writing objects:  50% (75/150)   Writing objects:  51% (77/150)   Writing objects:  52% (78/150)   Writing objects:  53% (80/150)   Writing objects:  54% (81/150)   Writing objects:  55% (83/150)   Writing objects:  56% (84/150)   Writing objects:  57% (86/150)   Writing objects:  58% (87/150)   Writing objects:  59% (89/150)   Writing objects:  60% (90/150)   Writing objects:  61% (92/150)   Writing objects:  62% (93/150)   Writing objects:  63% (95/150)   Writing objects:  64% (96/150)   Writing objects:  65% (98/150)   Writing objects:  66% (99/150)   Writing objects:  67% (101/150)   Writing objects:  68% (102/150)   Writing objects:  69% (104/150)   Writing objects:  70% (105/150)   Writing objects:  71% (107/150)   Writing objects:  72% (108/150)   Writing objects:  73% (110/150)   Writing objects:  74% (111/150)   Writing objects:  75% (113/150)   Writing objects:  76% (114/150)   Writing objects:  77% (116/150)   Writing objects:  78% (117/150)   Writing objects:  79% (119/150)   Writing objects:  80% (120/150)   Writing objects:  81% (122/150)   Writing objects:  82% (123/150)   Writing objects:  83% (125/150)   Writing objects:  84% (126/150)   Writing objects:  85% (128/150)   Writing objects:  86% (129/150)   Writing objects:  87% (131/150)   Writing objects:  88% (132/150)   Writing objects:  89% (134/150)   Writing objects:  90% (135/150)   Writing objects:  91% (137/150)   Writing objects:  92% (138/150)   Writing objects:  93% (140/150)   Writing objects:  94% (141/150)   Writing objects:  95% (143/150)   Writing objects:  96% (144/150)   Writing objects:  97% (146/150)   Writing objects:  98% (147/150)   Writing objects:  99% (149/150)   Writing objects: 100% (150/150)   Writing objects: 100% (150/150), 505.20 KiB | 0 bytes/s, done.
+Total 150 (delta 43), reused 0 (delta 0)
+remote: Resolving deltas:   2% (1/43)[Kremote: Resolving deltas:   4% (2/43)[Kremote: Resolving deltas:   6% (3/43)[Kremote: Resolving deltas:   9% (4/43)[Kremote: Resolving deltas:  11% (5/43)[Kremote: Resolving deltas:  13% (6/43)[Kremote: Resolving deltas:  16% (7/43)[Kremote: Resolving deltas:  18% (8/43)[Kremote: Resolving deltas:  48% (21/43)[Kremote: Resolving deltas:  53% (23/43)[Kremote: Resolving deltas:  55% (24/43)[Kremote: Resolving deltas:  76% (33/43)[Kremote: Resolving deltas:  90% (39/43)[Kremote: Resolving deltas: 100% (43/43)[Kremote: Resolving deltas: 100% (43/43), done.[K
+To https://github.com/zy3299/repo.git
+ * [new branch]      master -> master
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git push origin master
+Everything up-to-date
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ pwd
+/Users/ZixinYi/Desktop/Website/website
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git branch
+* [32mmaster[m
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	[32mnew file:   .DS_Store[m
+	[32mmodified:   .Rproj.user/8869A92C/console06/8FE406B5[m
+	[32mmodified:   .Rproj.user/8869A92C/console06/8FE406B5.env[m
+	[32mmodified:   .Rproj.user/8869A92C/console06/INDEX001[m
+	[32mmodified:   .Rproj.user/8869A92C/sources/prop/3F689BF[m
+	[32mmodified:   .Rproj.user/8869A92C/sources/prop/INDEX[m
+	[32mmodified:   config.toml[m
+	[32mnew file:   content/.DS_Store[m
+	[32mnew file:   content/Aptamer.csv[m
+	[32mnew file:   content/MyResume.pdf[m
+	[32mnew file:   content/Project1.Rmd[m
+	[32mnew file:   content/Project1.html[m
+	[32mnew file:   content/Project2.Rmd[m
+	[32mnew file:   content/Project2.html[m
+	[32mnew file:   content/Target.csv[m
+	[32mdeleted:    content/blog/2015-07-23-r-rmarkdown.Rmd[m
+	[32mdeleted:    content/blog/2015-07-23-r-rmarkdown.html[m
+	[32mnew file:   content/blog/2019-12-09-intro-biopython-fun.Rmd[m
+	[32mnew file:   content/blog/2019-12-09-intro-biopython-fun.html[m
+	[32mdeleted:    content/blog/creating-a-new-theme.md[m
+	[32mdeleted:    content/blog/goisforlovers.md[m
+	[32mdeleted:    content/blog/hugoisforlovers.md[m
+	[32mdeleted:    content/blog/migrate-from-jekyll.md[m
+	[32mmodified:   content/projects.md[m
+	[32mnew file:   content/ssi-sir-2017-ca-cdph-adult_28procs_.csv[m
+	[32mdeleted:    data/projects.yml[m
+	[32mnew file:   public/.DS_Store[m
+	[32mmodified:   public/404.html[m
+	[32mnew file:   public/Aptamer.csv[m
+	[32mnew file:   public/MyResume copy.pdf[m
+	[32mnew file:   public/MyResume.pdf[m
+	[32mnew file:   public/Project1.Rmd[m
+	[32mnew file:   public/Project1_files/figure-html/unnamed-chunk-13-1.png[m
+	[32mnew file:   public/Project1_files/figure-html/unnamed-chunk-14-1.png[m
+	[32mnew file:   public/Project1_files/figure-html/unnamed-chunk-15-1.png[m
+	[32mnew file:   public/Project1_files/figure-html/unnamed-chunk-16-1.png[m
+	[32mnew file:   public/Project1_files/figure-html/unnamed-chunk-17-1.png[m
+	[32mnew file:   public/Project2.Rmd[m
+	[32mnew file:   public/Project2_files/figure-html/unnamed-chunk-13-1.png[m
+	[32mnew file:   public/Project2_files/figure-html/unnamed-chunk-14-1.png[m
+	[32mnew file:   public/Project2_files/figure-html/unnamed-chunk-4-1.png[m
+	[32mnew file:   public/Project2_files/figure-html/unnamed-chunk-6-1.png[m
+	[32mnew file:   public/Project2_files/figure-html/unnamed-chunk-7-1.png[m
+	[32mnew file:   public/Project2_files/figure-html/unnamed-chunk-7-2.png[m
+	[32mnew file:   public/Target.csv[m
+	[32mmodified:   public/blog/2015-07-23-r-rmarkdown/index.html[m
+	[32mnew file:   public/blog/2019-12-09-intro-biopython-fun.Rmd[m
+	[32mmodified:   public/blog/creating-a-new-theme/index.html[m
+	[32mmodified:   public/blog/goisforlovers/index.html[m
+	[32mmodified:   public/blog/hugoisforlovers/index.html[m
+	[32mmodified:   public/blog/index.html[m
+	[32mmodified:   public/blog/index.xml[m
+	[32mnew file:   public/blog/intro-biopython-fun/index.html[m
+	[32mmodified:   public/blog/migrate-from-jekyll/index.html[m
+	[32mmodified:   public/categories/development/index.html[m
+	[32mmodified:   public/categories/development/index.xml[m
+	[32mmodified:   public/categories/golang/index.html[m
+	[32mmodified:   public/categories/golang/index.xml[m
+	[32mmodified:   public/categories/index.html[m
+	[32mmodified:   public/categories/index.xml[m
+	[32mmodified:   public/categories/projects/index.html[m
+	[32mmodified:   public/categories/projects/index.xml[m
+	[32mmodified:   public/categories/r/index.html[m
+	[32mmodified:   public/categories/r/index.xml[m
+	[32mnew file:   public/img/.DS_Store[m
+	[32mmodified:   public/img/profile.png[m
+	[32mmodified:   public/index.html[m
+	[32mmodified:   public/index.xml[m
+	[32mnew file:   public/myresuem/index.html[m
+	[32mnew file:   public/project1/index.html[m
+	[32mnew file:   public/project2/index.html[m
+	[32mmodified:   public/projects/index.html[m
+	[32mmodified:   public/sitemap.xml[m
+	[32mnew file:   public/ssi-sir-2017-ca-cdph-adult_28procs_.csv[m
+	[32mmodified:   public/tags/development/index.html[m
+	[32mmodified:   public/tags/development/index.xml[m
+	[32mmodified:   public/tags/go/index.html[m
+	[32mmodified:   public/tags/go/index.xml[m
+	[32mmodified:   public/tags/golang/index.html[m
+	[32mmodified:   public/tags/golang/index.xml[m
+	[32mmodified:   public/tags/hugo/index.html[m
+	[32mmodified:   public/tags/hugo/index.xml[m
+	[32mmodified:   public/tags/index.html[m
+	[32mmodified:   public/tags/index.xml[m
+	[32mmodified:   public/tags/plot/index.html[m
+	[32mmodified:   public/tags/plot/index.xml[m
+	[32mmodified:   public/tags/projects/index.html[m
+	[32mmodified:   public/tags/projects/index.xml[m
+	[32mmodified:   public/tags/r-markdown/index.html[m
+	[32mmodified:   public/tags/r-markdown/index.xml[m
+	[32mmodified:   public/tags/regression/index.html[m
+	[32mmodified:   public/tags/regression/index.xml[m
+	[32mmodified:   public/tags/templates/index.html[m
+	[32mmodified:   public/tags/templates/index.xml[m
+	[32mmodified:   public/tags/themes/index.html[m
+	[32mmodified:   public/tags/themes/index.xml[m
+	[32mnew file:   static/.DS_Store[m
+	[32mnew file:   static/MyResume.pdf[m
+	[32mnew file:   static/Project1_files/figure-html/unnamed-chunk-13-1.png[m
+	[32mnew file:   static/Project1_files/figure-html/unnamed-chunk-14-1.png[m
+	[32mnew file:   static/Project1_files/figure-html/unnamed-chunk-15-1.png[m
+	[32mnew file:   static/Project1_files/figure-html/unnamed-chunk-16-1.png[m
+	[32mnew file:   static/Project1_files/figure-html/unnamed-chunk-17-1.png[m
+	[32mnew file:   static/Project2_files/figure-html/unnamed-chunk-13-1.png[m
+	[32mnew file:   static/Project2_files/figure-html/unnamed-chunk-14-1.png[m
+	[32mnew file:   static/Project2_files/figure-html/unnamed-chunk-4-1.png[m
+	[32mnew file:   static/Project2_files/figure-html/unnamed-chunk-6-1.png[m
+	[32mnew file:   static/Project2_files/figure-html/unnamed-chunk-7-1.png[m
+	[32mnew file:   static/Project2_files/figure-html/unnamed-chunk-7-2.png[m
+	[32mnew file:   static/img/.DS_Store[m
+	[32mmodified:   static/img/profile.png[m
+	[32mmodified:   themes/hugo-sustain/layouts/_default/projects.html[m
+	[32mmodified:   themes/hugo-sustain/layouts/index.html[m
+	[32mmodified:   themes/hugo-sustain/layouts/partials/social.html[m
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/8869A92C/console06/8FE406B5[m
+
+]0;~/Desktop/Website/websiteZixins-MacBook:website ZixinYi$ git add .

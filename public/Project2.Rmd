@@ -1,0 +1,350 @@
+---
+title: 'Project 2: Modeling, Testing, and Predicting'
+author: "SDS348 Fall 2019"
+date: ''
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.align="center", fig.height=5, fig.width=8)
+```
+
+## Fiona Yi zy3299
+
+#### 0. Introduction (4  pts)
+
+Introduce your dataset and each of your variables (or just your main variables if you have lots) in a paragraph.
+
+*This dataset, Surgical Site Infections (SSIs) for Operative Procedures in Healthcare, displays procedure counts and infection counts submitted by different hospitals in California in 2017. Each Hospital is catagorized both by its own type and its risk-adjustment assessment, in order to better understanding the occurance of SSIs. The NHSN Standardized Infections Ratios (SRI) is calculated by dividing the number of observed infections by the number of predicted infections,and SIR data from 2015 was listed for reference. SRI would be expected to achieve 0.88 by 2020 under the regulation.*
+
+```{r}
+#install packages
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(lmtest)
+library(sandwich)
+library(vegan)
+library(plotROC)
+library(MASS)
+library(boot)
+library(glmnet)
+select<-dplyr::select
+SSI<- read.csv("ssi-sir-2017-ca-cdph-adult_28procs_.csv", na.strings = c("", "NA"))
+
+#Prepare dataset
+SSI%>%select(Hospital_Category_RiskAdjustment,Hospital_Type,
+             Procedure_Count,Infection_Count,Predicted_Infection_Count,SIR,SIR_2015)%>%
+      rename(Type_Risk=Hospital_Category_RiskAdjustment,Type=Hospital_Type,
+             Procedure=Procedure_Count,Infection=Infection_Count,
+             Infection_P=Predicted_Infection_Count)%>%
+      drop_na()->SSI
+```
+
+#### 1. MANOVA Testing 
+
+Briefly discuss assumptions and whether or not they are likely to have been met (2).
+
+*MANOVA Assumptions are not likely to meet by SSI dataset which focused on hospitals only in California, with fairly more data came from major/common types of hospitals.*
+
+Perform a MANOVA testing whether any of your numeric variables (or a subset of them, if including them all doesn't make sense) show a mean difference across levels of one of your categorical variables (3). 
+
+```{r}
+# Variable Selection
+SSI%>%select(-Type_Risk)->SSI1
+
+# Manova test
+covmats <- SSI1 %>% group_by(Type) %>% do(covs = cov(.[2:6]))
+for (i in 1:6) {
+print(covmats$covs[i])
+}
+man1 <- manova(cbind(Procedure, Infection, Infection_P, 
+                     SIR, SIR_2015) ~ Type, data = SSI1)
+summary(man1)
+```
+
+*A MANOVA Test is applited to all major numerical variables based on different levels of Hospital Type, and p-value is significantly small. Therefore, there is at least five numerical response variables differ by Hospital Type.*
+
+If they do, perform univariate ANOVAs to find response(s) showing a mean difference across groups (3), and perform post-hoc t tests to find which groups differ (3). Discuss the number of tests you have performed, calculate the probability of at least one type I error (if unadjusted), and adjust the significance level accordingly (bonferroni correction) before discussing significant differences (3).
+
+```{r}
+# Anova test
+summary.aov(man1)
+
+#Type I Error
+1-0.95^9
+
+#Adjusted Alpha
+0.05/9
+
+## Posthoc test
+pairwise.t.test(SSI1$Procedure, SSI1$Type, p.adj = "none")
+pairwise.t.test(SSI1$Infection, SSI1$Type, p.adj = "none")
+pairwise.t.test(SSI1$Infection_P, SSI1$Type, p.adj = "none")
+```
+
+*By running ANOVA for each response variable, only three of them (procedure count, infection count, and predicted infection count) have p values less than 0.05. In a nutshell,9 hypothesis test are performed (1 Manova,5 anovas for all 5 response variables, and 3 posthocs for significant ANOVA variables). Overall Type-I rate is 36.96% and the adjusted significance level is 0.0056. Post-hoc t-tests are used to futher investigate the difference on each response variable by different hospital types. Procedure Counts differ between different types of hospitals significantly for most cases, hardest to differentiate major teaching hospitals with large/medium community hosiptals. In Infection Counts, it fails to differ pediatric hospitals or critical access hospitals from any other type. Predicted Infection Counts has the same situation as the Infection Counts.*
+
+#### 2. Randomization Testing
+
+Perform some kind of randomization test on your data (that makes sense). This can be anything you want! State null and alternative hypotheses, perform the test, and interpret the results (7). Create a plot visualizing the null distribution and the test statistic (3).
+
+*Null hypothesis: there is no difference for mean or variance in SIR on different types of hospital in SSI dataset. Alternative hypothesis: there is a different mean or variance in SIR on different types of hospital in SSI dataset.*
+
+```{r}
+#One-way ANOVA Table
+summary(aov(SIR~Type,data=SSI))
+
+#Randomization-test
+obs_F<-1.308
+Fs<-replicate(5000,{
+ new<-SSI%>%mutate(SIR=sample(SIR))
+ SSW<- new%>%group_by(Type)%>%summarize(SSW=sum((SIR-mean(SIR))^2))%>%summarize(sum(SSW))%>%pull
+ SSB<- new%>%mutate(mean=mean(SIR))%>%group_by(Type)%>%mutate(groupmean=mean(SIR))%>%
+ summarize(SSB=sum((mean-groupmean)^2))%>%summarize(sum(SSB))%>%pull
+ (SSB/5)/(SSW/2875)
+})
+
+#Visualization
+hist(Fs, prob=T); abline(v = obs_F, col="red",add=T)
+
+mean(Fs>obs_F)
+```
+
+*The p-value is actually less than 0.05, which means we fail to rejuct the null hypothesis, there is no significant difference in SIR value by different types of hospital.*
+
+
+#### 3. Linear Regression Model
+
+Build a linear regression model predicting one of your response variables from at least 2 other variables, including their interaction. Mean-center any numeric variables involved in the interaction.Interpret the coefficient estimates (do not discuss significance) (10)
+
+```{r}
+#Mena-Center numeric variable
+SSI$Infection_c <- SSI$Infection - mean(SSI$Infection, na.rm=T)
+
+# fitted model
+fit1 <- lm( SIR~ Type*Infection_c, data=SSI)
+summary(fit1)
+```
+
+*By centering the mean of numeric response variable, it shows that when count of infection reaches average value in small community hospitals (<125 beds) in 2017 California, the SRI is 1.75.*
+
+Plot the regression using `ggplot()`. If your interaction is numeric by numeric, refer to code near the end of WS15 to make the plot. If you have 3 or more predictors, just chose two to plot for convenience. (7)
+
+```{r}
+#Visualization of linear regression
+ggplot(SSI, aes(x = Infection, y = SIR, color = Type)) +
+  geom_point() + geom_smooth(method = "lm")
+```
+
+Check assumptions of linearity, normality, and homoskedasticity either graphically or using a hypothesis test (3)
+
+```{r}
+#Linearity Check
+resids<-fit1$residuals
+fitvals<-fit1$fitted.values
+ggplot()+geom_point(aes(fitvals,resids))+geom_hline(yintercept=0, color='red')
+
+#Nomarlity Check
+ggplot()+geom_histogram(aes(resids), bins=20)
+```
+
+*Even by looking at the graphs of scatterplot or histogram, unfortunately, it is clear that neither the normality nor the linearity assumption was met.*
+
+Regardless, recompute regression results with robust standard errors via `coeftest(..., vcov=vcovHC(...))`. Discuss significance of results, including any changes from before/after robust SEs if applicable. (7)
+
+```{r}
+#robust standard errors
+coeftest(fit1, vcov=vcovHC(fit1,type="HC1"))
+```
+*By using robust standard error, p-values for generally gets larger but still remains significant (except for pediatric hospitals type gains a considerably smaller p-value which makes it significant now), and therefore, we still reject all the null hypothesis.*
+
+What proportion of the variation in the outcome does your model explain? (3)
+
+*According to the fitted model, Multiple R-squared is 0.3596, which means 35.96% of variation in the response variable explained by the overall model.*
+
+
+#### 4. Linear Regression Model with interaction
+
+Rerun same regression model (with interaction), but this time compute bootstrapped standard errors. Discuss any changes you observe in SEs and p-values using these SEs compared to the original SEs and the robust SEs)
+
+```{r}
+#repeat 1000 times
+set.seed(123)
+samp_distn<-replicate(1000, {
+ boot_SSI<-SSI[sample(nrow(SSI),replace=TRUE),]
+ fit1 <- lm( SIR~ Type*Infection_c, data=boot_SSI)
+ coef(fit1)
+})
+do.call(rbind, lapply(samp_distn, unlist))->samp_distn
+
+#Estimated SEs
+samp_distn%>%as.data.frame%>%summarize_all(sd,na.rm=T)
+```
+
+*The estimate SEs produced by 1000 times of bootstrapping generally gets even larger than robust standard errors, and therefore gives a closer original sample distribution. *
+
+#### 5. Logistic Regression 
+
+Perform a logistic regression predicting a binary categorical variable (if you don't have one, make/get one) from at least two explanatory variables (interaction not necessary). 
+
+Interpret coefficient estimates in context (10)
+
+```{r}
+#binary categorical variable
+SSI%>%mutate(improvement=ifelse(SIR>SIR_2015,1,0))->SSI
+SSI%>%select(Type,Infection_c,improvement)->SSI2
+
+# logistic regression
+fit2 <- glm(improvement ~ Type+Infection_c, data = SSI2, family = binomial(link = "logit"))
+coeftest(fit2)
+exp(coef(fit2))
+```
+
+*The effect is significant that odds of increasing SIR this comparing to 2015 for small community hospitals with average number of infection cases is 1.41 times of odds for large community hospitals, 0.996 times of odds for medium community hospitals, 1.21 times of odds for critical access hospitals, 1.80 times of odds for major teaching hospitals, and 1.45 times of odds for pediatric hospitals. When controlling for hospital type, each infection case added to the average number of infection would result in SRI increase of 0.83.*
+
+Report a confusion matrix for your logistic regression (2)
+
+```{r}
+#confusion matrix
+SSI2$prob <- predict(fit2, type = "response")
+table(predict=as.numeric(SSI2$prob>.5),truth=SSI2$improvement)%>%addmargins
+```
+
+Compute and discuss the Accuracy, Sensitivity (TPR), Specificity (TNR), and Recall (PPV) of your model (5)
+
+```{r}
+#Accuracy
+(1863+317)/2881
+
+#Sensitivity (TPR)
+317/902
+
+#Specificity (TNR)
+1863/1979
+
+#Recall (PPV)
+317/433
+```
+
+Using ggplot, plot density of log-odds (logit) by your binary outcome variable (3)
+
+```{r}
+#plot
+SSI2$logit<-predict(fit2,type="link")
+SSI2$improvement_f<-as.factor(SSI2$improvement)
+SSI2%>%ggplot()+geom_density(aes(logit,color=improvement_f,fill=improvement_f), alpha=.4)+
+  geom_vline(xintercept=0)+xlab("predictor (logit)")
+```
+
+Generate an ROC curve (plot) and calculate AUC (either manually or with a package); interpret (10)
+
+```{r}
+#ROC Curve
+ROCplot <- ggplot(SSI2) + geom_roc(aes(d = improvement, m = prob),n.cuts = 0)
+ROCplot
+
+#AUC
+calc_auc(ROCplot)
+```
+
+*The AUC value is 0.898, which means that probability that a randomly selected hospital with an improved SIR from 2015 has a higher prediction than a randomly selected hospital without an improved SIR from 2015.*
+
+Perform 10-fold (or repeated random sub-sampling) CV and report average out-of-sample Accuracy, Sensitivity, and Recall (10)
+
+```{r}
+#function class_diag
+class_diag<-function(probs,truth){
+ tab<-table(factor(probs>.5,levels=c("FALSE","TRUE")),truth)
+ acc=sum(diag(tab))/sum(tab)
+ sens=tab[2,2]/colSums(tab)[2]
+ spec=tab[1,1]/colSums(tab)[1]
+ ppv=tab[2,2]/rowSums(tab)[2]
+ if(is.numeric(truth)==FALSE & is.logical(truth)==FALSE) truth<-as.numeric(truth)-1
+ #CALCULATE EXACT AUC
+ ord<-order(probs, decreasing=TRUE)
+ probs <- probs[ord]; truth <- truth[ord]
+ TPR=cumsum(truth)/max(1,sum(truth))
+ FPR=cumsum(!truth)/max(1,sum(!truth))
+ dup<-c(probs[-1]>=probs[-length(probs)], FALSE)
+ TPR<-c(0,TPR[!dup],1); FPR<-c(0,FPR[!dup],1)
+ n <- length(TPR)
+ auc<- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+ data.frame(acc,sens,spec,ppv,auc)
+} 
+
+#10-fold CV
+set.seed(1234)
+k = 10
+data1<-SSI2[sample(nrow(SSI2)),]
+folds<-cut(seq(1:nrow(SSI2)),breaks=k,labels=F)
+diags<-NULL
+for(i in 1:k){
+ train<-data1[folds!=i,]
+ test<-data1[folds==i,]
+ truth<-test$improvement
+ fit <- glm(improvement ~ Type+Infection_c, data=SSI2, family=binomial(link="logit"))
+ probs<-predict(fit,newdata = test,type="response")
+ diags<-rbind(diags,class_diag(probs,truth))
+}
+apply(diags,2,mean)
+```
+
+*After 10-fold CV, the acc, sens, spec, ppv, or auc didn't make a noticeable difference from the simple logistic regression. It might be attributed to that the dataset with around 3000 entries is large enough to be representative.*
+
+#### 6. LASSO Regression
+
+Choose one variable you want to predict (can be one you used from before; either binary or continuous) and run a LASSO regression inputting all the rest of your variables as predictors. Choose lambda to give the simplest model whose accuracy is near that of the best (i.e., `lambda.1se`). Discuss which variables are retained. 
+
+```{r}
+#LASSO regression
+SSI%>%select(-Infection_c)->SSI3
+fit3 <- glm(improvement~ ., data =SSI3)
+y<-as.matrix(SSI3$improvement)
+x <- model.matrix(fit3)
+x <- x[, -1]
+cv<-cv.glmnet(x,y) 
+lasso <- glmnet(x,y, lambda = cv$lambda.1se)
+coef(lasso)
+
+# dataset preparation
+SSI3%>%select(Procedure,Infection,Infection_P,SIR,SIR_2015,improvement)->SSI_lasso
+
+# logistric regression
+fit_lasso <- glm(improvement ~ ., data = SSI_lasso)
+coeftest(fit_lasso)
+```
+*By running LASSO, it is shown that coefficients for number of procedure, number of infections, SIR, and SIR in 2015 are important.*
+
+Perform 10-fold CV using this model: if response in binary, compare model's out-of-sample accuracy to that of your logistic regression in part 5; if response is numeric, compare the residual standard error (at the bottom of the summary output, aka RMSE): lower is better fit!
+
+```{r}
+# 10-fold
+set.seed(1234)
+k = 10
+
+# rows&folds
+data1 <- SSI_lasso[sample(nrow(SSI_lasso)), ]
+folds <- cut(seq(1:nrow(SSI_lasso)), breaks = k, labels = F)
+diags <- NULL
+
+# test
+for (i in 1:k) {
+train <- data1[folds != i, ]
+test <- data1[folds == i, ]
+truth <- test$improvement
+fit <- glm(improvement ~ ., data = train)
+probs <- predict(fit, newdata = test, type = "response")
+diags <- rbind(diags, class_diag(probs, truth))
+}
+apply(diags, 2, mean)
+```
+
+*By using only important variables, AUC increase from 0.898 from the previous 10-fold CV logic regression to 0.974 by selecting out LASSO important predictors. *
+

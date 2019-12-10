@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Zixin Yi" />
+    <meta name="description" content="description">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>Intro BioPython Fun</title>
+    <meta name="generator" content="Hugo 0.60.1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/myresume.pdf">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="/blog/intro-biopython-fun/">Intro BioPython Fun</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          December 9, 2019
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<div id="restriction-enzyme-split" class="section level4">
+<h4>Restriction Enzyme Split</h4>
+<p>In the following string, using re.findall(), match restriction enzyme binding sites ANTAAT and GCRWTG.Note that per the IUPAC nucleotide code, N is any base, R is A or G, W is A or T</p>
+<pre class="python"><code>string=&quot;ATGGCAATAACCCCCCGTTTCTACTTCTAGAGGAGAAAAGTATTGACATGAGCGCTCCCGGCACAAGGGCCAAAGAAGTCTCCAATTTCTTATTTCCGAATGACATGCGTCTCCTTGCGGGTAAATCACCGACCGCAATTCATAGAAGCCTGGGGGAACAGATAGGTCTAATTAGCTTAAGAGAGTAAATCCTGGGATCATTCAGTAGTAACCATAAACTTACGCTGGGGCTTCTTCGGCGGATTTTTACAGTTACCAACCAGGAGATTTGAAGTAAATCAGTTGAGGATTTAGCCGCGCTATCCGGTAATCTCCAAATTAAAACATACCGTTCCATGAAGGCTAGAATTACTTACCGGCCTTTTCCATGCCTGCGCTATACCCCCCCACTCTCCCGCTTATCCGTCCGAGCGGAGGCAGTGCGATCCTCCGTTAAGATATTCTTACGTGTGACGTAGCTATGTATTTTGCAGAGCTGGCGAACGCGTTGAACACTTCACAGATGGTAGGGATTCGGGTAAAGGGCGTATAATTGGGGACTAACATAGGCGTAGACTACGATGGCGCCAACTCAATCGCAGCTCGAGCGCCCTGAATAACGTACTCATCTCAACTCATTCTCGGCAATCTACCGAGCGACTCGATTATCAACGGCTGTCTAGCAGTTCTAATCTTTTGCCAGCATCGTAATAGCCTCCAAGAGATTGATGATAGCTATCGGCACAGAACTGAGACGGCGCCGATGGATAGCGGACTTTCGGTCAACCACAATTCCCCACGGGACAGGTCCTGCGGTGCGCATCACTCTGAATGTACAAGCAACCCAAGTGGGCCGAGCCTGGACTCAGCTGGTTCCTGCGTGAGCTCGAGACTCGGGATGACAGCTCTTTAAACATAGAGCGGGGGCGTCGAACGGTCGAGAAAGTCATAGTACCTCGGGTACCAACTTACTCAGGTTATTGCTTGAAGCTGTACTATTTTAGGGGGGGAGCGCTGAAGGTCTCTTCTTCTCATGACTGAACTCGCGAGGGTCGTGAAGTCGGTTCCTTCAATGGTTAAAAAACAAAGGCTTACTGTGCGCAGAGGAACGCCCATCTAGCGGCTGGCGTCTTGAATGCTCGGTCCCCTTTGTCATTCCGGATTAATCCATTTCCCTCATTCACGAGCTTGCGAAGTCTACATTGGTATATGAATGCGACCTAGAAGAGGGCGCTTAAAATTGGCAGTGGTTGATGCTCTAAACTCCATTTGGTTTACTCGTGCATCACCGCGATAGGCTGACAAAGGTTTAACATTGAATAGCAAGGCACTTCCGGTCTCAATGAACGGCCGGGAAAGGTACGCGCGCGGTATGGGAGGATCAAGGGGCCAATAGAGAGGCTCCTCTCTCACTCGCTAGGAGGCAAATGTAAAACAATGGTTACTGCATCGATACATAAAACATGTCCATCGGTTGCCCAAAGTGTTAAGTGTCTATCACCCCTAGGGCCGTTTCCCGCATATAAACGCCAGGTTGTATCCGCATTTGATGCTACCGTGGATGAGTCTGCGTCGAGCGCGCCGCACGAATGTTGCAATGTATTGCATGAGTAGGGTTGACTAAGAGCCGTTAGATGCGTCGCTGTACTAATAGTTGTCGACAGACCGTCGAGATTAGAAAATGGTACCAGCATTTTCGGAGGTTCTCTAACTAGTATGGATTGCGGTGTCTTCACTGTGCTGCGGCTACCCATCGCCTGAAATCCAGCTGGTGTCAAGCCATCCCCTCTCCGGGACGCCGCATGTAGTGAAACATATACGTTGCACGGGTTCACCGCGGTCCGTTCTGAGTCGACCAAGGACACAATCGAGCTCCGATCCGTACCCTCGACAAACTTGTACCCGACCCCCGGAGCTTGCCAGCTCCTCGGGTATCATGGAGCCTGTGGTTCATCGCGTCCGATATCAAACTTCGTCATGATAAAGTCCCCCCCTCGGGAGTACCAGAGAAGATGACTACTGAGTTGTGCGAT&quot;</code></pre>
+<p>How many cuts total in the sequence do you expect if you digest with both of these restriction enzymes? How many fragments do you expect?</p>
+<pre class="python"><code>import re
+re.findall(r&quot;A.TAAT|GC[^CT][^CG]TG&quot;,string)</code></pre>
+<pre><code>## [&#39;GCGTTG&#39;, &#39;ATTAAT&#39;, &#39;GCAATG&#39;, &#39;ACTAAT&#39;]</code></pre>
+<p><em>Four cuts in total so that five fragments would be expected.</em></p>
+<p>Assume the restriction enzymes cut the sequence (string, above) at the midpoint of the binding site , so ANTand GCR. Using re.split(), cut the sequence at the cut points to digest the sequence, yielding the correct fragments. You might find that two separate re.split() commands is the easier way to go, but this my require a loop. Once you have the correct fragments, then use the count_chars() function from class to count the number of each base in each fragment. Modify it to additionally report the total length of each fragment.</p>
+<pre class="python"><code>#split by restriction enzymes
+stringa=re.sub(r&quot;(A.TAAT|GC[^CT][^CG]TG)&quot;,r&quot;\1@&quot;,string)
+stringb=re.sub(r&quot;ATG@&quot;,&quot;@ATG&quot;,stringa)
+stringc=re.sub(r&quot;TTG@&quot;,&quot;@TTG&quot;,stringb)
+stringd=re.sub(r&quot;AAT@&quot;,&quot;@AAT&quot;,stringc)
+string_frag=re.split(&quot;@&quot;,stringd)
+print(string_frag)</code></pre>
+<pre><code>## [&#39;ATGGCAATAACCCCCCGTTTCTACTTCTAGAGGAGAAAAGTATTGACATGAGCGCTCCCGGCACAAGGGCCAAAGAAGTCTCCAATTTCTTATTTCCGAATGACATGCGTCTCCTTGCGGGTAAATCACCGACCGCAATTCATAGAAGCCTGGGGGAACAGATAGGTCTAATTAGCTTAAGAGAGTAAATCCTGGGATCATTCAGTAGTAACCATAAACTTACGCTGGGGCTTCTTCGGCGGATTTTTACAGTTACCAACCAGGAGATTTGAAGTAAATCAGTTGAGGATTTAGCCGCGCTATCCGGTAATCTCCAAATTAAAACATACCGTTCCATGAAGGCTAGAATTACTTACCGGCCTTTTCCATGCCTGCGCTATACCCCCCCACTCTCCCGCTTATCCGTCCGAGCGGAGGCAGTGCGATCCTCCGTTAAGATATTCTTACGTGTGACGTAGCTATGTATTTTGCAGAGCTGGCGAACGCG&#39;, &#39;TTGAACACTTCACAGATGGTAGGGATTCGGGTAAAGGGCGTATAATTGGGGACTAACATAGGCGTAGACTACGATGGCGCCAACTCAATCGCAGCTCGAGCGCCCTGAATAACGTACTCATCTCAACTCATTCTCGGCAATCTACCGAGCGACTCGATTATCAACGGCTGTCTAGCAGTTCTAATCTTTTGCCAGCATCGTAATAGCCTCCAAGAGATTGATGATAGCTATCGGCACAGAACTGAGACGGCGCCGATGGATAGCGGACTTTCGGTCAACCACAATTCCCCACGGGACAGGTCCTGCGGTGCGCATCACTCTGAATGTACAAGCAACCCAAGTGGGCCGAGCCTGGACTCAGCTGGTTCCTGCGTGAGCTCGAGACTCGGGATGACAGCTCTTTAAACATAGAGCGGGGGCGTCGAACGGTCGAGAAAGTCATAGTACCTCGGGTACCAACTTACTCAGGTTATTGCTTGAAGCTGTACTATTTTAGGGGGGGAGCGCTGAAGGTCTCTTCTTCTCATGACTGAACTCGCGAGGGTCGTGAAGTCGGTTCCTTCAATGGTTAAAAAACAAAGGCTTACTGTGCGCAGAGGAACGCCCATCTAGCGGCTGGCGTCTTGAATGCTCGGTCCCCTTTGTCATTCCGGATT&#39;, &#39;AATCCATTTCCCTCATTCACGAGCTTGCGAAGTCTACATTGGTATATGAATGCGACCTAGAAGAGGGCGCTTAAAATTGGCAGTGGTTGATGCTCTAAACTCCATTTGGTTTACTCGTGCATCACCGCGATAGGCTGACAAAGGTTTAACATTGAATAGCAAGGCACTTCCGGTCTCAATGAACGGCCGGGAAAGGTACGCGCGCGGTATGGGAGGATCAAGGGGCCAATAGAGAGGCTCCTCTCTCACTCGCTAGGAGGCAAATGTAAAACAATGGTTACTGCATCGATACATAAAACATGTCCATCGGTTGCCCAAAGTGTTAAGTGTCTATCACCCCTAGGGCCGTTTCCCGCATATAAACGCCAGGTTGTATCCGCATTTGATGCTACCGTGGATGAGTCTGCGTCGAGCGCGCCGCACGAATGTTGCA&#39;, &#39;ATGTATTGCATGAGTAGGGTTGACTAAGAGCCGTTAGATGCGTCGCTGTACT&#39;, &#39;AATAGTTGTCGACAGACCGTCGAGATTAGAAAATGGTACCAGCATTTTCGGAGGTTCTCTAACTAGTATGGATTGCGGTGTCTTCACTGTGCTGCGGCTACCCATCGCCTGAAATCCAGCTGGTGTCAAGCCATCCCCTCTCCGGGACGCCGCATGTAGTGAAACATATACGTTGCACGGGTTCACCGCGGTCCGTTCTGAGTCGACCAAGGACACAATCGAGCTCCGATCCGTACCCTCGACAAACTTGTACCCGACCCCCGGAGCTTGCCAGCTCCTCGGGTATCATGGAGCCTGTGGTTCATCGCGTCCGATATCAAACTTCGTCATGATAAAGTCCCCCCCTCGGGAGTACCAGAGAAGATGACTACTGAGTTGTGCGAT&#39;]</code></pre>
+<pre class="python"><code>#count characters
+def count_chars(sentence): 
+     counts = {} 
+     for c in sentence: 
+         if c in counts: 
+            counts[c]+=1 
+         else:
+             counts[c]=1 
+     for c in counts:
+         print(c, &quot;appears&quot;, counts[c],&quot;times&quot;)
+
+def count_total(sentence):
+    total=0
+    for letter in sentence:  
+        total+=1 
+    print(&quot;This fragment has&quot;,total,&quot;units in total&quot; )</code></pre>
+<pre class="python"><code>#count fragment 1
+count_chars(string_frag[0])</code></pre>
+<pre><code>## (&#39;A&#39;, &#39;appears&#39;, 129, &#39;times&#39;)
+## (&#39;C&#39;, &#39;appears&#39;, 122, &#39;times&#39;)
+## (&#39;T&#39;, &#39;appears&#39;, 127, &#39;times&#39;)
+## (&#39;G&#39;, &#39;appears&#39;, 109, &#39;times&#39;)</code></pre>
+<pre class="python"><code>count_total(string_frag[0])</code></pre>
+<pre><code>## (&#39;This fragment has&#39;, 487, &#39;units in total&#39;)</code></pre>
+<pre class="python"><code>#count fragment 2
+count_chars(string_frag[1])</code></pre>
+<pre><code>## (&#39;A&#39;, &#39;appears&#39;, 160, &#39;times&#39;)
+## (&#39;C&#39;, &#39;appears&#39;, 164, &#39;times&#39;)
+## (&#39;T&#39;, &#39;appears&#39;, 156, &#39;times&#39;)
+## (&#39;G&#39;, &#39;appears&#39;, 176, &#39;times&#39;)</code></pre>
+<pre class="python"><code>count_total(string_frag[1])</code></pre>
+<pre><code>## (&#39;This fragment has&#39;, 656, &#39;units in total&#39;)</code></pre>
+<pre class="python"><code>#count fragment 3
+count_chars(string_frag[2])</code></pre>
+<pre><code>## (&#39;A&#39;, &#39;appears&#39;, 113, &#39;times&#39;)
+## (&#39;C&#39;, &#39;appears&#39;, 103, &#39;times&#39;)
+## (&#39;T&#39;, &#39;appears&#39;, 106, &#39;times&#39;)
+## (&#39;G&#39;, &#39;appears&#39;, 111, &#39;times&#39;)</code></pre>
+<pre class="python"><code>count_total(string_frag[2])</code></pre>
+<pre><code>## (&#39;This fragment has&#39;, 433, &#39;units in total&#39;)</code></pre>
+<pre class="python"><code>#count fragment 4
+count_chars(string_frag[3])</code></pre>
+<pre><code>## (&#39;A&#39;, &#39;appears&#39;, 12, &#39;times&#39;)
+## (&#39;C&#39;, &#39;appears&#39;, 8, &#39;times&#39;)
+## (&#39;T&#39;, &#39;appears&#39;, 16, &#39;times&#39;)
+## (&#39;G&#39;, &#39;appears&#39;, 16, &#39;times&#39;)</code></pre>
+<pre class="python"><code>count_total(string_frag[3])</code></pre>
+<pre><code>## (&#39;This fragment has&#39;, 52, &#39;units in total&#39;)</code></pre>
+<pre class="python"><code>#count fragment 5
+count_chars(string_frag[4])</code></pre>
+<pre><code>## (&#39;A&#39;, &#39;appears&#39;, 87, &#39;times&#39;)
+## (&#39;C&#39;, &#39;appears&#39;, 110, &#39;times&#39;)
+## (&#39;T&#39;, &#39;appears&#39;, 91, &#39;times&#39;)
+## (&#39;G&#39;, &#39;appears&#39;, 96, &#39;times&#39;)</code></pre>
+<pre class="python"><code>count_total(string_frag[4])</code></pre>
+<pre><code>## (&#39;This fragment has&#39;, 384, &#39;units in total&#39;)</code></pre>
+</div>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/docs.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script src="/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

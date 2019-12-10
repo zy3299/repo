@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Zixin Yi" />
+    <meta name="description" content="description">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>Project 1: Exploratory Data Analysis</title>
+    <meta name="generator" content="Hugo 0.60.1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/myresume.pdf">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="/project1/">Project 1: Exploratory Data Analysis</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          January 1, 0001
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<div id="fiona-yi-zy3299" class="section level2">
+<h2>Fiona Yi zy3299</h2>
+</div>
+<div id="data-wrangling-and-data-exploration" class="section level2">
+<h2>Data Wrangling and Data Exploration</h2>
+<div id="introduction-4-pts" class="section level4">
+<h4>0. Introduction (4 pts)</h4>
+<ul>
+<li>Write a narrative introductory paragraph (or two) describing the datasets you have chosen, the variables they contain, how they were acquired, and why they are interesting to you. Expand on potential associations you may expect, if any.</li>
+</ul>
+<p><em>Aptamers are RNA or DNA oligonucleotides developed by the SELEX (Systematic Evolution of Ligands by Exponential Enrichment) method, which selects best-binding sequences from cycles of bead-based selection,reverse transcription, PCR amplification, transcription, and PAGE RNA purification. Repetitive selections can enrich binding species from a highly diverse population. In clinical diagnostic use, aptamers function similar to how the antibody bind the protein, but they make the binding process more efficient, cost-effective, and less time-consuming (Darmostuk 2015). In a nutshell, a high binding affinity is critical for an aptamer’s downstream application. Through the study of two data sets about aptamers from Aptagen’s Aptamer Index, binding affinity (Kd) is analyzed with Aptamer chemistry (nature of oligonucleotides), Antigen (type of binding target), length (number of nucleotides in the sequence), and Reference (the year that aptamer was found).</em></p>
+</div>
+<div id="tidying-spreadgather-8-pts" class="section level4">
+<h4>1. Tidying: Spread/Gather (8 pts)</h4>
+<ul>
+<li>Tidy the datasets (using the <code>tidyr</code> functions <code>gather</code> and/or <code>spread</code>)</li>
+<li>If you data sets are already tidy, untidy them, retidy them.</li>
+<li>Document the process (describe in words what was done)</li>
+</ul>
+<pre class="r"><code>library(tidyr)</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.5.2</code></pre>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>Aptamer&lt;- read.csv(&quot;Aptamer.csv&quot;)
+Target&lt;- read.csv(&quot;Target.csv&quot;)
+Aptamer%&gt;%tidyr::drop_na()%&gt;%
+  tibble::rowid_to_column()%&gt;%
+   gather(`Length`, `Affinity`,`MW`, key = &quot;Type&quot;, value = &quot;Numeric_value&quot;)%&gt;%
+   spread(Type, Numeric_value)%&gt;%select(-rowid)-&gt;Aptamer
+Target%&gt;%tidyr::drop_na()%&gt;%
+  tibble::rowid_to_column()%&gt;%
+   gather(`Reference`, `Year`, key = &quot;Article&quot;, value = &quot;Reference&quot;)%&gt;%
+  spread(Article, Reference)%&gt;%select(-rowid)-&gt;Target</code></pre>
+<pre><code>## Warning: attributes are not identical across measure variables;
+## they will be dropped</code></pre>
+<p><em>For both of the dataset, after dropping N/A values, I used gather to untidy the data and then used spread to tidy the data again. Due to duplicate identifiers problem, and row id column was first added ti the data set and then got removed from it.</em></p>
+</div>
+<div id="joiningmerging-8-pts" class="section level4">
+<h4>2. Joining/Merging (8 pts)</h4>
+<ul>
+<li>Join your datasets into one using a <code>dplyr</code> join function</li>
+<li>If you have multiple observations on the joining variable in either dataset, fix this by collapsing via summarize</li>
+<li>Discuss the process in words, including why you chose the join you did</li>
+<li>Discuss which cases were dropped, if any, and potential problems with this</li>
+</ul>
+<pre class="r"><code>inner_join(Aptamer, Target, by=&quot;Target&quot;)%&gt;%select(-&quot;Name&quot;)-&gt;Aptagen</code></pre>
+<pre><code>## Warning: Column `Target` joining factors with different levels, coercing to
+## character vector</code></pre>
+<pre class="r"><code>Aptagen1&lt;-Aptagen[c(&quot;Aptamer&quot;,&quot;AptamerChemistry&quot;,&quot;Target&quot;,&quot;Antigen&quot;,
+    &quot;Affinity&quot;,&quot;Length&quot;,&quot;MW&quot;,&quot;Reference&quot;,&quot;Year&quot;)]</code></pre>
+<p><em>In Aptamer dataset, corresponding targets and specific characteristics about each aptamer is recorded. In Target dataset,corresponding Aptamer, specific charactersitic, and referece article information were reacorded. Aptamer and target are two overlapping variables in either dataset and therefore could be inner-joined together. Since two dataset were joined by the common variable “Target”, variable “Aptamer” was duplicated in the joined dataset so that one of them was removed with select funtion. Final dataset was reordered to present characteristics about aptamers first and followed with characteristics about targets. Since all cases with N/A values were dropped on the tidying step, no more further revision was needed.</em></p>
+</div>
+<div id="wrangling-40-pts" class="section level4">
+<h4>3. Wrangling (40 pts)</h4>
+<ul>
+<li>Use all six core <code>dplyr</code> functions in the service of generating summary statistics (18 pts)
+<ul>
+<li>Use mutate to generate a variable that is a function of at least one other variable</li>
+</ul></li>
+<li>Compute at least 10 different summary statistics using summarize and summarize with group_by (18 pts)
+<ul>
+<li>At least 5 of these should group by a categorical variable. Create one by dichotomizing a numeric if necessary</li>
+<li>If applicable, at least 1 of these 5 should group by two categorical variables</li>
+</ul></li>
+<li>Summarize/discuss all results in no more than two paragraphs (4 pts)</li>
+</ul>
+<pre class="r"><code>Aptagen1%&gt;%summarize_at(c(&quot;Affinity&quot;,&quot;Length&quot;, &quot;MW&quot;), mean, na.rm=T)</code></pre>
+<pre><code>##   Affinity  Length       MW
+## 1 75.47659 58.4507 18026.43</code></pre>
+<pre class="r"><code>Aptagen1%&gt;%filter(`AptamerChemistry`==&quot;DNA&quot;)%&gt;%group_by(Antigen)%&gt;%
+  summarise(Mean_Affinity=mean(`Affinity`, na.rm=T), 
+            SD_Affinity=sd(`Affinity`, na.rm=T), n())%&gt;%arrange(Mean_Affinity)</code></pre>
+<pre><code>## # A tibble: 5 x 4
+##   Antigen       Mean_Affinity SD_Affinity `n()`
+##   &lt;fct&gt;                 &lt;dbl&gt;       &lt;dbl&gt; &lt;int&gt;
+## 1 Cells                  16.5        NA       1
+## 2 Peptide                45           0       2
+## 3 Protein                50.0        82.0    23
+## 4 Small Organic          97.8       154.     14
+## 5 Other                 145.        127.      4</code></pre>
+<pre class="r"><code>Aptagen1%&gt;%filter(`AptamerChemistry`==&quot;RNA&quot;)%&gt;%group_by(Antigen)%&gt;%
+  summarise(Mean_Affinity=mean(`Affinity`, na.rm=T),
+            SD_Affinity=sd(`Affinity`, na.rm=T), n())%&gt;%arrange(SD_Affinity)</code></pre>
+<pre><code>## # A tibble: 4 x 4
+##   Antigen       Mean_Affinity SD_Affinity `n()`
+##   &lt;fct&gt;                 &lt;dbl&gt;       &lt;dbl&gt; &lt;int&gt;
+## 1 Peptide              190           0        2
+## 2 Cells                  4.34        5.88     2
+## 3 Protein               20.6        43.6     14
+## 4 Small Organic        383.        394.       3</code></pre>
+<pre class="r"><code>Aptagen1%&gt;%filter(`Antigen`==&quot;Protein&quot;)%&gt;%group_by(`AptamerChemistry`)%&gt;%
+  summarise(Mean_Affinity=mean(`Affinity`, na.rm=T), 
+            SD_Affinity=sd(`Affinity`, na.rm=T), n())%&gt;%arrange(Mean_Affinity)</code></pre>
+<pre><code>## # A tibble: 4 x 4
+##   AptamerChemistry Mean_Affinity SD_Affinity `n()`
+##   &lt;fct&gt;                    &lt;dbl&gt;       &lt;dbl&gt; &lt;int&gt;
+## 1 Peptide                    3          1.41     2
+## 2 RNA                       20.6       43.6     14
+## 3 DNA                       50.0       82.0     23
+## 4 Chimeric                  67.0       33.9      2</code></pre>
+<pre class="r"><code>Aptagen1%&gt;%group_by(`AptamerChemistry`,`Antigen`)%&gt;%
+  summarize_at(c(&quot;Affinity&quot;), mean, na.rm=T)%&gt;%
+  arrange(desc(`Affinity`))</code></pre>
+<pre><code>## # A tibble: 13 x 3
+## # Groups:   AptamerChemistry [4]
+##    AptamerChemistry Antigen       Affinity
+##    &lt;fct&gt;            &lt;fct&gt;            &lt;dbl&gt;
+##  1 RNA              Small Organic   383.  
+##  2 RNA              Peptide         190   
+##  3 Peptide          Tissue          186   
+##  4 DNA              Other           145.  
+##  5 DNA              Small Organic    97.8 
+##  6 Chimeric         Protein          67.0 
+##  7 DNA              Protein          50.0 
+##  8 DNA              Peptide          45   
+##  9 RNA              Protein          20.6 
+## 10 DNA              Cells            16.5 
+## 11 RNA              Cells             4.34
+## 12 Peptide          Protein           3   
+## 13 Peptide          Cells             2.2</code></pre>
+<p><em>In the Aptagen full dataset, average Affinity is 74.44 nM, average Length is 58.21 nucleotides, and average molecular weight is 17951.54 g/mole. In RNA Aptamers, aptamers targerting on Small Organic molecules has the largest mean affinity, which means the tightest binding, but comes with a fairly large standard deviation. In DNA Aptamers, tightest-binding aptamers are the ones targerting on Other molecules, but also comes with the largest standard deviation. When targeting on proteins, Chimeric aptamers has the largest affinity, and DNA aptamers in general bind tighter than RNA aptaerms.In a nutshell, RNA aptamers targeting on Small Organic molecules has the largest binding affinity.</em></p>
+<pre class="r"><code>Aptagen1%&gt;%mutate(Time=Year&lt;2000)%&gt;%
+  group_by(Time,`Antigen`)%&gt;%filter(`Antigen`==&quot;Protein&quot;)%&gt;%
+  summarize_at(c(&quot;Affinity&quot;,&quot;Length&quot;, &quot;MW&quot;), mean, na.rm=T)</code></pre>
+<pre><code>## # A tibble: 2 x 5
+## # Groups:   Time [2]
+##   Time  Antigen Affinity Length     MW
+##   &lt;lgl&gt; &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 FALSE Protein     39.6   64.6 16542.
+## 2 TRUE  Protein     30.6   36.6 10612.</code></pre>
+<pre class="r"><code>Aptagen1%&gt;%mutate(Time=Year&lt;2000)%&gt;%
+  group_by(Time,`AptamerChemistry`)%&gt;%filter(`AptamerChemistry` %in% c(&quot;DNA&quot;, &quot;RNA&quot;))%&gt;%
+  summarize_at(c(&quot;Affinity&quot;,&quot;Length&quot;, &quot;MW&quot;), mean,na.rm=T)</code></pre>
+<pre><code>## # A tibble: 4 x 5
+## # Groups:   Time [2]
+##   Time  AptamerChemistry Affinity Length     MW
+##   &lt;lgl&gt; &lt;fct&gt;               &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 FALSE DNA                  56.8   51.1 17282.
+## 2 FALSE RNA                  39.7   84.1 22619.
+## 3 TRUE  DNA                 234     32.5 10157.
+## 4 TRUE  RNA                 287.   109   35175.</code></pre>
+<pre class="r"><code>Aptagen1%&gt;%mutate(Size=`Affinity`&lt;74.44)%&gt;%
+  group_by(Size,`AptamerChemistry`)%&gt;%filter(`AptamerChemistry`==&quot;DNA&quot;)%&gt;%
+  summarize_at(c(&quot;Length&quot;, &quot;MW&quot;), mean, na.rm=T)</code></pre>
+<pre><code>## # A tibble: 2 x 4
+## # Groups:   Size [2]
+##   Size  AptamerChemistry Length     MW
+##   &lt;lgl&gt; &lt;fct&gt;             &lt;dbl&gt;  &lt;dbl&gt;
+## 1 FALSE DNA                52.1 16185.
+## 2 TRUE  DNA                48.3 16823.</code></pre>
+<pre class="r"><code>Aptagen1%&gt;%mutate(Size=`Affinity`&lt;74.44)%&gt;%
+  group_by(Size,`AptamerChemistry`)%&gt;%filter(`AptamerChemistry`==&quot;RNA&quot;)%&gt;%
+  summarize_at(c(&quot;Length&quot;, &quot;MW&quot;), mean, na.rm=T)</code></pre>
+<pre><code>## # A tibble: 2 x 4
+## # Groups:   Size [2]
+##   Size  AptamerChemistry Length     MW
+##   &lt;lgl&gt; &lt;fct&gt;             &lt;dbl&gt;  &lt;dbl&gt;
+## 1 FALSE RNA                70.8 35089.
+## 2 TRUE  RNA                94.4 21861.</code></pre>
+<pre class="r"><code>Aptagen1%&gt;%mutate(NTP=MW/`Length`)%&gt;%
+  group_by(`AptamerChemistry`)%&gt;%
+  summarise(mean_NTP=mean(NTP))%&gt;%arrange(mean_NTP)</code></pre>
+<pre><code>## # A tibble: 4 x 2
+##   AptamerChemistry mean_NTP
+##   &lt;fct&gt;               &lt;dbl&gt;
+## 1 Peptide              104.
+## 2 Chimeric             296.
+## 3 DNA                  333.
+## 4 RNA                  350.</code></pre>
+<p><em>Aptamers targeting on proteins found before 2000 have lower Affinity, shorter length, and smaller molecular weight. DNA Aptamers found before 2000 have larger affinity, shorter length, and smaller molecular weight, but RNA Aptamers found before 2000 have larger affinity, longer length, and larger molecular weight.DNA aptamers smaller in size has shorter Length but higher Molecular Weight. However, RNA aptamers smaller in size has longer Length but smaller Molecular Weight. RNA Aptamers has the largest average Molecular weight of one nucleotide, which means they are rich in ATP/GTP, instead Peptide has the least mean_NTP value, which mean they are rich in CTP/UTP. </em></p>
+</div>
+<div id="visualizing-30-pts" class="section level4">
+<h4>4. Visualizing (30 pts)</h4>
+<ul>
+<li><p>Create two effective, polished plots with ggplot</p>
+<ul>
+<li>Each plot should map 3 of your variables to aesthetics</li>
+<li>Each plot should have a title and clean labeling for all mappings</li>
+<li>Change at least one default theme element and color for at least one mapping per plot</li>
+<li>For at least one plot, add more tick marks (x, y, or both) than are given by default</li>
+<li>For at least one plot, use the stat=“summary” function</li>
+<li>Supporting paragraph or two (for each plot) describing the relationships/trends that are apparent</li>
+</ul></li>
+</ul>
+<pre class="r"><code>library(ggplot2)</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.5.2</code></pre>
+<pre class="r"><code>Aptagen1%&gt;%filter(`AptamerChemistry` %in% c(&quot;DNA&quot;, &quot;RNA&quot;))-&gt;Aptagen2
+ggplot(data=Aptagen2, aes(x=`Length`,y=`Affinity`))+
+  geom_point(color=&#39;grey&#39;)+
+  theme_minimal()+
+  geom_smooth(aes(color=`AptamerChemistry`),method = &quot;lm&quot;, se = FALSE)+
+  ggtitle(&quot;Affinity Change According to Aptamer Length by Different Aptamer Chemistry&quot;) +   
+  ylab(&quot;Affinity (nM)&quot;)+ 
+  xlab(&quot;Length (nt)&quot;)</code></pre>
+<p><img src="/Project1_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><em>The first ggplot graphs the fitted regression lines on the relationship of Aptamer Lengh and Affinity.First of all, since data is too limited on chimeric aptamers and Peptide aptamers, only data from DNA and RNA aptamers are filtered for this ggplot. According to the graph, interestingly, RNA aptamers has decreasing affinity when length gets longer; however, DNA aptamers has increasing affinity when aptamer length gets longer. However, such a graph could be resulted from a small sample size of limited data (not as much aptamers have been found so far).</em></p>
+<pre class="r"><code>ggplot(data=Aptagen1, aes(x =`AptamerChemistry`,y=`Affinity`,fill=`AptamerChemistry`))+
+  geom_bar(stat=&quot;summary&quot;, fun.y=&quot;mean&quot;)+
+  geom_errorbar(stat=&quot;summary&quot;, width=0.5)+
+  theme(axis.text.x = element_text(face=&quot;bold&quot;,size=14, angle=45),
+          axis.text.y = element_text(face=&quot;bold&quot;,size=14, angle=45))+
+  scale_fill_manual(values=c(&quot;Chimeric&quot;=&quot;pink&quot;,&quot;DNA&quot;=&quot;light blue&quot;, 
+                             &quot;Peptide&quot;=&quot;light yellow&quot;,&quot;RNA&quot;=&quot;grey&quot;))+
+  ggtitle(&quot;Aptamer Affinity by different Aptamer Chemistry When Targeting on Different Antigens&quot;)+
+  xlab(&quot;Aptamer Chemistry&quot;)+ylab(&quot;Affinity (nM)&quot;)+
+  facet_wrap(~`Antigen`)</code></pre>
+<pre><code>## No summary function supplied, defaulting to `mean_se()
+## No summary function supplied, defaulting to `mean_se()
+## No summary function supplied, defaulting to `mean_se()
+## No summary function supplied, defaulting to `mean_se()
+## No summary function supplied, defaulting to `mean_se()
+## No summary function supplied, defaulting to `mean_se()</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values (geom_errorbar).</code></pre>
+<p><img src="/Project1_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><em>The Second ggplot graphs the bar graphs comparing Aptamer Affinity by different Aptamer Chemistry when targeting on different antigens.According to the ggplot, among all antigens, Small Organic molecules are the easiestly targeted ones. In different Aptamer Chemistry, RNA Aptamers binds the best to Small Organic Molecules, with a large error range; Peptide Aptamers performs best on targeting tissue; DNA Aptamers binds the Other molecules the tightest; Chimeric Aptamers binds the best to protein targets. Again,such a graph could be resulted from a small sample size of limited data (not as much aptamers have been found so far). </em></p>
+</div>
+<div id="dimensionality-reduction-20-pts" class="section level4">
+<h4>5. Dimensionality Reduction (20 pts)</h4>
+<ul>
+<li><p>Either k-means clustering or PCA (inclusive “or”) should be performed on at least three numeric variables in your dataset</p>
+<ul>
+<li>All relevant steps discussed in class should be included/reported</li>
+<li>A visualization of the clusters or the first few principal components (using ggplot2)</li>
+<li>Supporting paragraph or two describing results found</li>
+</ul></li>
+</ul>
+<pre class="r"><code>Aptagen1%&gt;%select_if(is.numeric)-&gt;Aptagen3
+Aptagen3 = data.frame(scale(Aptagen3))
+Aptagen_pca&lt;-princomp(Aptagen3)
+summary(Aptagen_pca, loadings=T)</code></pre>
+<pre><code>## Importance of components:
+##                           Comp.1    Comp.2    Comp.3
+## Standard deviation     1.2445428 0.9865124 0.6600401
+## Proportion of Variance 0.5236713 0.3290366 0.1472922
+## Cumulative Proportion  0.5236713 0.8527078 1.0000000
+## 
+## Loadings:
+##          Comp.1 Comp.2 Comp.3
+## Affinity  0.221  0.960  0.170
+## Length    0.676 -0.276  0.683
+## MW        0.703        -0.711</code></pre>
+<pre class="r"><code>eig1&lt;-Aptagen_pca$sdev^2
+varprop=round(eig1/sum(eig1),2)
+ggplot()+geom_bar(aes(y=varprop,x=1:3),stat=&quot;identity&quot;)+xlab(&quot;&quot;)+
+  geom_path(aes(y=varprop,x=1:3))+
+ geom_text(aes(x=1:3,y=varprop,label=round(varprop,2)),vjust=1,col=&quot;white&quot;,size=5)</code></pre>
+<p><img src="/Project1_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>summary(Aptagen_pca, loadings=T)</code></pre>
+<pre><code>## Importance of components:
+##                           Comp.1    Comp.2    Comp.3
+## Standard deviation     1.2445428 0.9865124 0.6600401
+## Proportion of Variance 0.5236713 0.3290366 0.1472922
+## Cumulative Proportion  0.5236713 0.8527078 1.0000000
+## 
+## Loadings:
+##          Comp.1 Comp.2 Comp.3
+## Affinity  0.221  0.960  0.170
+## Length    0.676 -0.276  0.683
+## MW        0.703        -0.711</code></pre>
+<pre class="r"><code>APCA&lt;-data.frame(PC1=Aptagen_pca$scores[,1],PC2=Aptagen_pca$scores[,2])
+ggplot(APCA, aes(x=PC1,y=PC2))+
+  geom_point()+
+ xlab(&quot;PC1&quot;)+ylab(&quot;PC2&quot;)+ggtitle(&quot;PCA&quot;)</code></pre>
+<p><img src="/Project1_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>Aptagen_pca$loadings[1:3,1:3]%&gt;%as.data.frame%&gt;%tibble::rowid_to_column()%&gt;%
+ggplot()+geom_hline(aes(yintercept=0),lty=2)+
+ geom_vline(aes(xintercept=0),lty=2)+ylab(&quot;PC2&quot;)+xlab(&quot;PC1&quot;)+
+ geom_segment(aes(x=0,y=0,xend=Comp.1,yend=Comp.2),arrow=arrow(),col=&quot;red&quot;)+
+ geom_label(aes(x=Comp.1*1.1,y=Comp.2*1.1,label=rowid))</code></pre>
+<p><img src="/Project1_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><em>The first PCA Bar graph shows that the PC1 marks 52% of the variance, PC2 marks 33% of the variance,and PC3 marks only 15% of the variance. Since the Aptagen data set only contains 3 numeric variables, all three PC attain a total of 100% of variance. The second PCA scatter plot incoporates PC1:Length vs. Molecular weight, higher score means shorter length and smaller molecular weight, and PC2:Affinity, higher score means higher the affinity. Most of data point scatter balancedly on PC1 Axis and PC2 Axis, with few extreme points of aptamers with high affinity, longer length and larger molecular weight, and few extreme points of aptamers with low affinity, longer length and larger molecular weight. The last PCA plot comes with arrows of three individual variables, where angles between vectors interpreted as correlations that smaller angle has higher correlation. Therefore, variable affinity has the lowest correlation among all three variables.. </em></p>
+</div>
+</div>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/docs.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script src="/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

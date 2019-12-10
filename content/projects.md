@@ -7,3 +7,10 @@ tags:
 - projects
 title: Projects
 ---
+## Projects 
+\
+Here are some projects I have been working on:            
+
+- #### [Project 1 (Data Wrangling and Exploratory Analysis)](/Project1/)   
+
+- #### [Project 2 (Modeling, Inference, Prediction)](/Project2/)               

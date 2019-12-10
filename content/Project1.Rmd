@@ -1,0 +1,222 @@
+---
+title: 'Project 1: Exploratory Data Analysis'
+author: "SDS348 Fall 2019"
+date: "9/16/2019"
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Fiona Yi zy3299
+
+## Data Wrangling and Data Exploration
+
+#### 0. Introduction (4  pts)
+
+- Write a narrative introductory paragraph (or two) describing the datasets you have chosen, the variables they contain, how they were acquired, and why they are interesting to you. Expand on potential associations you may expect, if any.
+
+*Aptamers are RNA or DNA oligonucleotides developed by the SELEX (Systematic Evolution of Ligands by Exponential Enrichment) method, which selects best-binding sequences from cycles of bead-based selection,reverse transcription, PCR amplification, transcription, and PAGE RNA purification. Repetitive selections can enrich binding species from a highly diverse population. In clinical diagnostic use, aptamers function similar to how the antibody bind the protein, but they make the binding process more efficient, cost-effective, and less time-consuming (Darmostuk 2015). In a nutshell, a high binding affinity is critical for an aptamer's downstream application. Through the study of two data sets about aptamers from Aptagen's Aptamer Index, binding affinity (Kd) is analyzed with Aptamer chemistry (nature of oligonucleotides), Antigen (type of binding target), length (number of nucleotides in the sequence), and Reference (the year that aptamer was found).*
+
+#### 1. Tidying: Spread/Gather (8 pts)
+
+- Tidy the datasets (using the `tidyr` functions `gather` and/or `spread`) 
+- If you data sets are already tidy, untidy them, retidy them.
+- Document the process (describe in words what was done)
+
+```{r}
+library(tidyr)
+library(dplyr)
+Aptamer<- read.csv("Aptamer.csv")
+Target<- read.csv("Target.csv")
+Aptamer%>%tidyr::drop_na()%>%
+  tibble::rowid_to_column()%>%
+   gather(`Length`, `Affinity`,`MW`, key = "Type", value = "Numeric_value")%>%
+   spread(Type, Numeric_value)%>%select(-rowid)->Aptamer
+Target%>%tidyr::drop_na()%>%
+  tibble::rowid_to_column()%>%
+   gather(`Reference`, `Year`, key = "Article", value = "Reference")%>%
+  spread(Article, Reference)%>%select(-rowid)->Target
+```
+
+*For both of the dataset, after dropping N/A values, I used gather to untidy the data and then used spread to tidy the data again. Due to duplicate identifiers problem, and row id column was first added ti the data set and then got removed from it.*
+    
+#### 2. Joining/Merging (8 pts)
+
+- Join your datasets into one using a `dplyr` join function
+- If you have multiple observations on the joining variable in either dataset, fix this by collapsing via summarize
+- Discuss the process in words, including why you chose the join you did
+- Discuss which cases were dropped, if any, and potential problems with this
+
+```{r}
+inner_join(Aptamer, Target, by="Target")%>%select(-"Name")->Aptagen
+Aptagen1<-Aptagen[c("Aptamer","AptamerChemistry","Target","Antigen",
+    "Affinity","Length","MW","Reference","Year")]
+```
+
+*In Aptamer dataset, corresponding targets and specific characteristics about each aptamer is recorded. In Target dataset,corresponding Aptamer, specific charactersitic, and referece article information were reacorded. Aptamer and target are two overlapping variables in either dataset and therefore could be inner-joined together. Since two dataset were joined by the common variable "Target", variable "Aptamer" was duplicated in the joined dataset so that one of them was removed with select funtion. Final dataset was reordered to present characteristics about aptamers first and followed with characteristics about targets. Since all cases with N/A values were dropped on the tidying step, no more further revision was needed.*
+
+#### 3. Wrangling (40 pts)
+
+- Use all six core `dplyr` functions in the service of generating summary statistics (18 pts)
+    - Use mutate to generate a variable that is a function of at least one other variable
+
+- Compute at least 10 different summary statistics using summarize and summarize with group_by (18 pts)
+    - At least 5 of these should group by a categorical variable. Create one by dichotomizing a numeric if necessary
+    - If applicable, at least 1 of these 5 should group by two categorical variables
+
+- Summarize/discuss all results in no more than two paragraphs (4 pts)
+
+```{r}
+Aptagen1%>%summarize_at(c("Affinity","Length", "MW"), mean, na.rm=T)
+```
+
+```{r}
+Aptagen1%>%filter(`AptamerChemistry`=="DNA")%>%group_by(Antigen)%>%
+  summarise(Mean_Affinity=mean(`Affinity`, na.rm=T), 
+            SD_Affinity=sd(`Affinity`, na.rm=T), n())%>%arrange(Mean_Affinity)
+```
+
+```{r}
+Aptagen1%>%filter(`AptamerChemistry`=="RNA")%>%group_by(Antigen)%>%
+  summarise(Mean_Affinity=mean(`Affinity`, na.rm=T),
+            SD_Affinity=sd(`Affinity`, na.rm=T), n())%>%arrange(SD_Affinity)
+```
+
+```{r}
+Aptagen1%>%filter(`Antigen`=="Protein")%>%group_by(`AptamerChemistry`)%>%
+  summarise(Mean_Affinity=mean(`Affinity`, na.rm=T), 
+            SD_Affinity=sd(`Affinity`, na.rm=T), n())%>%arrange(Mean_Affinity)
+```
+
+```{r}
+Aptagen1%>%group_by(`AptamerChemistry`,`Antigen`)%>%
+  summarize_at(c("Affinity"), mean, na.rm=T)%>%
+  arrange(desc(`Affinity`))
+```
+
+*In the Aptagen full dataset, average Affinity is 74.44 nM, average Length is 58.21 nucleotides, and average molecular weight is 17951.54 g/mole. In RNA Aptamers, aptamers targerting on Small Organic molecules has the largest mean affinity, which means the tightest binding, but comes with a fairly large standard deviation. In DNA Aptamers, tightest-binding aptamers are the ones targerting on Other molecules, but also comes with the largest standard deviation. When targeting on proteins, Chimeric aptamers has the largest affinity, and DNA aptamers in general bind tighter than RNA aptaerms.In a nutshell, RNA aptamers targeting on Small Organic molecules has the largest binding affinity.*
+
+```{r}
+Aptagen1%>%mutate(Time=Year<2000)%>%
+  group_by(Time,`Antigen`)%>%filter(`Antigen`=="Protein")%>%
+  summarize_at(c("Affinity","Length", "MW"), mean, na.rm=T)
+```
+
+```{r}
+Aptagen1%>%mutate(Time=Year<2000)%>%
+  group_by(Time,`AptamerChemistry`)%>%filter(`AptamerChemistry` %in% c("DNA", "RNA"))%>%
+  summarize_at(c("Affinity","Length", "MW"), mean,na.rm=T)
+```
+
+```{r}
+Aptagen1%>%mutate(Size=`Affinity`<74.44)%>%
+  group_by(Size,`AptamerChemistry`)%>%filter(`AptamerChemistry`=="DNA")%>%
+  summarize_at(c("Length", "MW"), mean, na.rm=T)
+```
+
+```{r}
+Aptagen1%>%mutate(Size=`Affinity`<74.44)%>%
+  group_by(Size,`AptamerChemistry`)%>%filter(`AptamerChemistry`=="RNA")%>%
+  summarize_at(c("Length", "MW"), mean, na.rm=T)
+```
+
+```{r}
+Aptagen1%>%mutate(NTP=MW/`Length`)%>%
+  group_by(`AptamerChemistry`)%>%
+  summarise(mean_NTP=mean(NTP))%>%arrange(mean_NTP)
+```
+
+*Aptamers targeting on proteins found before 2000 have lower Affinity, shorter length, and smaller molecular weight. DNA Aptamers found before 2000 have larger affinity, shorter length, and smaller molecular weight, but RNA Aptamers found before 2000 have larger affinity, longer length, and larger molecular weight.DNA aptamers smaller in size has shorter Length but higher Molecular Weight. However, RNA aptamers smaller in size has longer Length but smaller Molecular Weight. RNA Aptamers has the largest average Molecular weight of one nucleotide, which means they are rich in ATP/GTP, instead Peptide has the least mean_NTP value, which mean they are rich in CTP/UTP. *
+
+#### 4. Visualizing (30 pts)
+
+- Create two effective, polished plots with ggplot
+
+    - Each plot should map 3 of your variables to aesthetics
+    - Each plot should have a title and clean labeling for all mappings
+    - Change at least one default theme element and color for at least one mapping per plot
+    - For at least one plot, add more tick marks (x, y, or both) than are given by default
+    - For at least one plot, use the stat="summary" function
+    - Supporting paragraph or two (for each plot) describing the relationships/trends that are apparent
+    
+```{r}
+library(ggplot2)
+Aptagen1%>%filter(`AptamerChemistry` %in% c("DNA", "RNA"))->Aptagen2
+ggplot(data=Aptagen2, aes(x=`Length`,y=`Affinity`))+
+  geom_point(color='grey')+
+  theme_minimal()+
+  geom_smooth(aes(color=`AptamerChemistry`),method = "lm", se = FALSE)+
+  ggtitle("Affinity Change According to Aptamer Length by Different Aptamer Chemistry") +   
+  ylab("Affinity (nM)")+ 
+  xlab("Length (nt)")
+```
+
+*The first ggplot graphs the fitted regression lines on the relationship of Aptamer Lengh and Affinity.First of all, since data is too limited on chimeric aptamers and Peptide aptamers, only data from DNA and RNA aptamers are filtered for this ggplot. According to the graph, interestingly, RNA aptamers has decreasing affinity when length gets longer; however, DNA aptamers has increasing affinity when aptamer length gets longer. However, such a graph could be resulted from a small sample size of limited data (not as much aptamers have been found so far).*
+
+```{r}
+ggplot(data=Aptagen1, aes(x =`AptamerChemistry`,y=`Affinity`,fill=`AptamerChemistry`))+
+  geom_bar(stat="summary", fun.y="mean")+
+  geom_errorbar(stat="summary", width=0.5)+
+  theme(axis.text.x = element_text(face="bold",size=14, angle=45),
+          axis.text.y = element_text(face="bold",size=14, angle=45))+
+  scale_fill_manual(values=c("Chimeric"="pink","DNA"="light blue", 
+                             "Peptide"="light yellow","RNA"="grey"))+
+  ggtitle("Aptamer Affinity by different Aptamer Chemistry When Targeting on Different Antigens")+
+  xlab("Aptamer Chemistry")+ylab("Affinity (nM)")+
+  facet_wrap(~`Antigen`)
+```
+
+*The Second ggplot graphs the bar graphs comparing Aptamer Affinity by different Aptamer Chemistry when targeting on different antigens.According to the ggplot, among all antigens, Small Organic molecules are the easiestly targeted ones. In different Aptamer Chemistry, RNA Aptamers binds the best to Small Organic Molecules, with a large error range; Peptide Aptamers performs best on targeting tissue; DNA Aptamers binds the Other molecules the tightest; Chimeric Aptamers binds the best to protein targets. Again,such a graph could be resulted from a small sample size of limited data (not as much aptamers have been found so far). *
+
+#### 5. Dimensionality Reduction (20 pts) 
+
+- Either k-means clustering or PCA (inclusive "or") should be performed on at least three numeric variables in your dataset
+
+    - All relevant steps discussed in class should be included/reported
+    - A visualization of the clusters or the first few principal components (using ggplot2)
+    - Supporting paragraph or two describing results found
+  
+```{r}
+Aptagen1%>%select_if(is.numeric)->Aptagen3
+Aptagen3 = data.frame(scale(Aptagen3))
+Aptagen_pca<-princomp(Aptagen3)
+summary(Aptagen_pca, loadings=T)
+eig1<-Aptagen_pca$sdev^2
+varprop=round(eig1/sum(eig1),2)
+ggplot()+geom_bar(aes(y=varprop,x=1:3),stat="identity")+xlab("")+
+  geom_path(aes(y=varprop,x=1:3))+
+ geom_text(aes(x=1:3,y=varprop,label=round(varprop,2)),vjust=1,col="white",size=5)
+```
+
+```{r}
+summary(Aptagen_pca, loadings=T)
+APCA<-data.frame(PC1=Aptagen_pca$scores[,1],PC2=Aptagen_pca$scores[,2])
+ggplot(APCA, aes(x=PC1,y=PC2))+
+  geom_point()+
+ xlab("PC1")+ylab("PC2")+ggtitle("PCA")
+```
+
+
+```{r}
+Aptagen_pca$loadings[1:3,1:3]%>%as.data.frame%>%tibble::rowid_to_column()%>%
+ggplot()+geom_hline(aes(yintercept=0),lty=2)+
+ geom_vline(aes(xintercept=0),lty=2)+ylab("PC2")+xlab("PC1")+
+ geom_segment(aes(x=0,y=0,xend=Comp.1,yend=Comp.2),arrow=arrow(),col="red")+
+ geom_label(aes(x=Comp.1*1.1,y=Comp.2*1.1,label=rowid))
+```
+
+*The first PCA Bar graph shows that the PC1 marks 52% of the variance, PC2 marks 33% of the variance,and PC3 marks only 15% of the variance. Since the Aptagen data set only contains 3 numeric variables, all three PC attain a total of 100% of variance. The second PCA scatter plot incoporates PC1:Length vs. Molecular weight, higher score means shorter length and smaller molecular weight, and PC2:Affinity, higher score means higher the affinity. Most of data point scatter balancedly on PC1 Axis and PC2 Axis, with few extreme points of aptamers with high affinity, longer length and larger molecular weight, and few extreme points of aptamers with low affinity, longer length and larger molecular weight. The last PCA plot comes with arrows of three individual variables, where angles between vectors interpreted as correlations that smaller angle has higher correlation. Therefore, variable affinity has the lowest correlation among all three variables.. *
+
+
+
+
+

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Zixin Yi" />
+    <meta name="description" content="description">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>Project 2: Modeling, Testing, and Predicting</title>
+    <meta name="generator" content="Hugo 0.60.1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/myresume.pdf">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="/project2/">Project 2: Modeling, Testing, and Predicting</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          January 1, 0001
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<div id="fiona-yi-zy3299" class="section level2">
+<h2>Fiona Yi zy3299</h2>
+<div id="introduction-4-pts" class="section level4">
+<h4>0. Introduction (4 pts)</h4>
+<p>Introduce your dataset and each of your variables (or just your main variables if you have lots) in a paragraph.</p>
+<p><em>This dataset, Surgical Site Infections (SSIs) for Operative Procedures in Healthcare, displays procedure counts and infection counts submitted by different hospitals in California in 2017. Each Hospital is catagorized both by its own type and its risk-adjustment assessment, in order to better understanding the occurance of SSIs. The NHSN Standardized Infections Ratios (SRI) is calculated by dividing the number of observed infections by the number of predicted infections,and SIR data from 2015 was listed for reference. SRI would be expected to achieve 0.88 by 2020 under the regulation.</em></p>
+<pre class="r"><code>#install packages
+library(dplyr)</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.2.1     ✓ purrr   0.3.3
+## ✓ tibble  2.1.3     ✓ stringr 1.4.0
+## ✓ tidyr   1.0.0     ✓ forcats 0.4.0
+## ✓ readr   1.3.1</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Warning: package &#39;purrr&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Warning: package &#39;stringr&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Warning: package &#39;forcats&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(ggplot2)
+library(lmtest)</code></pre>
+<pre><code>## Warning: package &#39;lmtest&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## Warning: package &#39;zoo&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre class="r"><code>library(sandwich)</code></pre>
+<pre><code>## Warning: package &#39;sandwich&#39; was built under R version 3.5.2</code></pre>
+<pre class="r"><code>library(vegan)</code></pre>
+<pre><code>## Warning: package &#39;vegan&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Loading required package: permute</code></pre>
+<pre><code>## Warning: package &#39;permute&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## This is vegan 2.5-6</code></pre>
+<pre class="r"><code>library(plotROC)
+library(MASS)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<pre class="r"><code>library(boot)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;boot&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:lattice&#39;:
+## 
+##     melanoma</code></pre>
+<pre class="r"><code>library(glmnet)</code></pre>
+<pre><code>## Warning: package &#39;glmnet&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
+## 
+##     expand, pack, unpack</code></pre>
+<pre><code>## Loading required package: foreach</code></pre>
+<pre><code>## Warning: package &#39;foreach&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;foreach&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:purrr&#39;:
+## 
+##     accumulate, when</code></pre>
+<pre><code>## Loaded glmnet 2.0-18</code></pre>
+<pre class="r"><code>select&lt;-dplyr::select
+SSI&lt;- read.csv(&quot;ssi-sir-2017-ca-cdph-adult_28procs_.csv&quot;, na.strings = c(&quot;&quot;, &quot;NA&quot;))
+
+#Prepare dataset
+SSI%&gt;%select(Hospital_Category_RiskAdjustment,Hospital_Type,
+             Procedure_Count,Infection_Count,Predicted_Infection_Count,SIR,SIR_2015)%&gt;%
+      rename(Type_Risk=Hospital_Category_RiskAdjustment,Type=Hospital_Type,
+             Procedure=Procedure_Count,Infection=Infection_Count,
+             Infection_P=Predicted_Infection_Count)%&gt;%
+      drop_na()-&gt;SSI</code></pre>
+</div>
+<div id="manova-testing" class="section level4">
+<h4>1. MANOVA Testing</h4>
+<p>Briefly discuss assumptions and whether or not they are likely to have been met (2).</p>
+<p><em>MANOVA Assumptions are not likely to meet by SSI dataset which focused on hospitals only in California, with fairly more data came from major/common types of hospitals.</em></p>
+<p>Perform a MANOVA testing whether any of your numeric variables (or a subset of them, if including them all doesn’t make sense) show a mean difference across levels of one of your categorical variables (3).</p>
+<pre class="r"><code># Variable Selection
+SSI%&gt;%select(-Type_Risk)-&gt;SSI1
+
+# Manova test
+covmats &lt;- SSI1 %&gt;% group_by(Type) %&gt;% do(covs = cov(.[2:6]))
+for (i in 1:6) {
+print(covmats$covs[i])
+}</code></pre>
+<pre><code>## [[1]]
+##                Procedure   Infection Infection_P          SIR     SIR_2015
+## Procedure   3.178096e+04 58.37963929 55.38371352  2.974868992  0.535141262
+## Infection   5.837964e+01  0.93999817  0.20812602  1.245108395 -0.008478440
+## Infection_P 5.538371e+01  0.20812602  0.31209588 -0.053005083 -0.067382974
+## SIR         2.974869e+00  1.24510840 -0.05300508  2.873648463 -0.003645747
+## SIR_2015    5.351413e-01 -0.00847844 -0.06738297 -0.003645747  3.521121207
+## 
+## [[1]]
+##               Procedure  Infection  Infection_P         SIR   SIR_2015
+## Procedure   58411.12813 89.0653670 112.57998316 17.39728064 2.56589991
+## Infection      89.06537  3.4419417   1.42396563  1.42796947 0.28965660
+## Infection_P   112.57998  1.4239656   1.66821832  0.01613403 0.03784658
+## SIR            17.39728  1.4279695   0.01613403  1.84314618 0.20290602
+## SIR_2015        2.56590  0.2896566   0.03784658  0.20290602 1.71346113
+## 
+## [[1]]
+##               Procedure  Infection  Infection_P         SIR     SIR_2015
+## Procedure   41910.85907 74.8687632 46.168228649 26.73307263 -2.855380208
+## Infection      74.86876  1.7507907  0.558566446  1.35795003  0.196023616
+## Infection_P    46.16823  0.5585664  0.873229298 -0.05516322 -0.006056343
+## SIR            26.73307  1.3579500 -0.055163224  2.64168353  0.351350635
+## SIR_2015       -2.85538  0.1960236 -0.006056343  0.35135063  2.444257591
+## 
+## [[1]]
+##               Procedure    Infection  Infection_P        SIR    SIR_2015
+## Procedure   1799.750000 -7.000000000  3.611187500 -18.803750 -31.5400000
+## Infection     -7.000000  0.514705882  0.001415441   1.417978   0.4758456
+## Infection_P    3.611188  0.001415441  0.042783346  -0.139151  -0.1340847
+## SIR          -18.803750  1.417977941 -0.139151029   5.136301   2.0611040
+## SIR_2015     -31.540000  0.475845588 -0.134084706   2.061104   3.6425096
+## 
+## [[1]]
+##                 Procedure  Infection  Infection_P         SIR  SIR_2015
+## Procedure   56430.1465074 239.665838 265.19012052 -7.92990776 0.7514559
+## Infection     239.6658378   8.657114   5.48493883  1.45774149 0.5464700
+## Infection_P   265.1901205   5.484939   5.47595076 -0.05540147 0.1711168
+## SIR            -7.9299078   1.457741  -0.05540147  1.69877626 0.2884161
+## SIR_2015        0.7514559   0.546470   0.17111684  0.28841611 1.1549559
+## 
+## [[1]]
+##               Procedure Infection Infection_P         SIR SIR_2015
+## Procedure   697584.3333  1169.000 641.8293333 720.8833333        0
+## Infection     1169.0000     3.000   0.5840000   1.8500000        0
+## Infection_P    641.8293     0.584   0.8226493   0.3601333        0
+## SIR            720.8833     1.850   0.3601333   1.1408333        0
+## SIR_2015         0.0000     0.000   0.0000000   0.0000000        0</code></pre>
+<pre class="r"><code>man1 &lt;- manova(cbind(Procedure, Infection, Infection_P, 
+                     SIR, SIR_2015) ~ Type, data = SSI1)
+summary(man1)</code></pre>
+<pre><code>##             Df  Pillai approx F num Df den Df    Pr(&gt;F)    
+## Type         5 0.11412   13.431     25  14375 &lt; 2.2e-16 ***
+## Residuals 2875                                             
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><em>A MANOVA Test is applited to all major numerical variables based on different levels of Hospital Type, and p-value is significantly small. Therefore, there is at least five numerical response variables differ by Hospital Type.</em></p>
+<p>If they do, perform univariate ANOVAs to find response(s) showing a mean difference across groups (3), and perform post-hoc t tests to find which groups differ (3). Discuss the number of tests you have performed, calculate the probability of at least one type I error (if unadjusted), and adjust the significance level accordingly (bonferroni correction) before discussing significant differences (3).</p>
+<pre class="r"><code># Anova test
+summary.aov(man1)</code></pre>
+<pre><code>##  Response Procedure :
+##               Df    Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Type           5   5606737 1121347  22.297 &lt; 2.2e-16 ***
+## Residuals   2875 144586480   50291                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##  Response Infection :
+##               Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Type           5   664.3 132.855  33.605 &lt; 2.2e-16 ***
+## Residuals   2875 11366.0   3.953                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##  Response Infection_P :
+##               Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Type           5  601.3 120.257  54.086 &lt; 2.2e-16 ***
+## Residuals   2875 6392.3   2.223                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##  Response SIR :
+##               Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Type           5   14.2  2.8396  1.3081 0.2575
+## Residuals   2875 6241.2  2.1708               
+## 
+##  Response SIR_2015 :
+##               Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Type           5   14.8  2.9691  1.4847 0.1914
+## Residuals   2875 5749.4  1.9998</code></pre>
+<pre class="r"><code>#Type I Error
+1-0.95^9</code></pre>
+<pre><code>## [1] 0.3697506</code></pre>
+<pre class="r"><code>#Adjusted Alpha
+0.05/9</code></pre>
+<pre><code>## [1] 0.005555556</code></pre>
+<pre class="r"><code>## Posthoc test
+pairwise.t.test(SSI1$Procedure, SSI1$Type, p.adj = &quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  SSI1$Procedure and SSI1$Type 
+## 
+##                          Community (&lt;125 Beds) Community (&gt;250 Beds)
+## Community (&gt;250 Beds)    1.4e-10               -                    
+## Community (125-250 Beds) 0.0272                2.2e-08              
+## Critical Access          0.1935                0.0028               
+## Major Teaching           9.7e-11               0.6371               
+## Pediatric                1.4e-09               7.8e-08              
+##                          Community (125-250 Beds) Critical Access
+## Community (&gt;250 Beds)    -                        -              
+## Community (125-250 Beds) -                        -              
+## Critical Access          0.0566                   -              
+## Major Teaching           2.0e-08                  0.0021         
+## Pediatric                5.7e-09                  9.2e-10        
+##                          Major Teaching
+## Community (&gt;250 Beds)    -             
+## Community (125-250 Beds) -             
+## Critical Access          -             
+## Major Teaching           -             
+## Pediatric                9.8e-08       
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(SSI1$Infection, SSI1$Type, p.adj = &quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  SSI1$Infection and SSI1$Type 
+## 
+##                          Community (&lt;125 Beds) Community (&gt;250 Beds)
+## Community (&gt;250 Beds)    1.7e-06               -                    
+## Community (125-250 Beds) 0.1456                9.3e-06              
+## Critical Access          0.8871                0.1651               
+## Major Teaching           &lt; 2e-16               3.9e-14              
+## Pediatric                0.6905                0.8990               
+##                          Community (125-250 Beds) Critical Access
+## Community (&gt;250 Beds)    -                        -              
+## Community (125-250 Beds) -                        -              
+## Critical Access          0.5955                   -              
+## Major Teaching           &lt; 2e-16                  0.0037         
+## Pediatric                0.8139                   0.6707         
+##                          Major Teaching
+## Community (&gt;250 Beds)    -             
+## Community (125-250 Beds) -             
+## Critical Access          -             
+## Major Teaching           -             
+## Pediatric                0.4408        
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(SSI1$Infection_P, SSI1$Type, p.adj = &quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  SSI1$Infection_P and SSI1$Type 
+## 
+##                          Community (&lt;125 Beds) Community (&gt;250 Beds)
+## Community (&gt;250 Beds)    3.9e-13               -                    
+## Community (125-250 Beds) 0.0091                6.0e-10              
+## Critical Access          0.5746                0.0138               
+## Major Teaching           &lt; 2e-16               &lt; 2e-16              
+## Pediatric                0.4769                0.9307               
+##                          Community (125-250 Beds) Critical Access
+## Community (&gt;250 Beds)    -                        -              
+## Community (125-250 Beds) -                        -              
+## Critical Access          0.2067                   -              
+## Major Teaching           &lt; 2e-16                  3.2e-05        
+## Pediatric                0.6748                   0.3780         
+##                          Major Teaching
+## Community (&gt;250 Beds)    -             
+## Community (125-250 Beds) -             
+## Critical Access          -             
+## Major Teaching           -             
+## Pediatric                0.4159        
+## 
+## P value adjustment method: none</code></pre>
+<p><em>By running ANOVA for each response variable, only three of them (procedure count, infection count, and predicted infection count) have p values less than 0.05. In a nutshell,9 hypothesis test are performed (1 Manova,5 anovas for all 5 response variables, and 3 posthocs for significant ANOVA variables). Overall Type-I rate is 36.96% and the adjusted significance level is 0.0056. Post-hoc t-tests are used to futher investigate the difference on each response variable by different hospital types. Procedure Counts differ between different types of hospitals significantly for most cases, hardest to differentiate major teaching hospitals with large/medium community hosiptals. In Infection Counts, it fails to differ pediatric hospitals or critical access hospitals from any other type. Predicted Infection Counts has the same situation as the Infection Counts.</em></p>
+</div>
+<div id="randomization-testing" class="section level4">
+<h4>2. Randomization Testing</h4>
+<p>Perform some kind of randomization test on your data (that makes sense). This can be anything you want! State null and alternative hypotheses, perform the test, and interpret the results (7). Create a plot visualizing the null distribution and the test statistic (3).</p>
+<p><em>Null hypothesis: there is no difference for mean or variance in SIR on different types of hospital in SSI dataset. Alternative hypothesis: there is a different mean or variance in SIR on different types of hospital in SSI dataset.</em></p>
+<pre class="r"><code>#One-way ANOVA Table
+summary(aov(SIR~Type,data=SSI))</code></pre>
+<pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Type           5     14   2.840   1.308  0.257
+## Residuals   2875   6241   2.171</code></pre>
+<pre class="r"><code>#Randomization-test
+obs_F&lt;-1.308
+Fs&lt;-replicate(5000,{
+ new&lt;-SSI%&gt;%mutate(SIR=sample(SIR))
+ SSW&lt;- new%&gt;%group_by(Type)%&gt;%summarize(SSW=sum((SIR-mean(SIR))^2))%&gt;%summarize(sum(SSW))%&gt;%pull
+ SSB&lt;- new%&gt;%mutate(mean=mean(SIR))%&gt;%group_by(Type)%&gt;%mutate(groupmean=mean(SIR))%&gt;%
+ summarize(SSB=sum((mean-groupmean)^2))%&gt;%summarize(sum(SSB))%&gt;%pull
+ (SSB/5)/(SSW/2875)
+})
+
+#Visualization
+hist(Fs, prob=T); abline(v = obs_F, col=&quot;red&quot;,add=T)</code></pre>
+<pre><code>## Warning in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...): &quot;add&quot; is
+## not a graphical parameter</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>mean(Fs&gt;obs_F)</code></pre>
+<pre><code>## [1] 0.2418</code></pre>
+<p><em>The p-value is actually less than 0.05, which means we fail to rejuct the null hypothesis, there is no significant difference in SIR value by different types of hospital.</em></p>
+</div>
+<div id="linear-regression-model" class="section level4">
+<h4>3. Linear Regression Model</h4>
+<p>Build a linear regression model predicting one of your response variables from at least 2 other variables, including their interaction. Mean-center any numeric variables involved in the interaction.Interpret the coefficient estimates (do not discuss significance) (10)</p>
+<pre class="r"><code>#Mena-Center numeric variable
+SSI$Infection_c &lt;- SSI$Infection - mean(SSI$Infection, na.rm=T)
+
+# fitted model
+fit1 &lt;- lm( SIR~ Type*Infection_c, data=SSI)
+summary(fit1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = SIR ~ Type * Infection_c, data = SSI)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.2913 -0.3862 -0.3315  0.0989 10.9817 
+## 
+## Coefficients:
+##                                          Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                               1.74629    0.07630  22.886  &lt; 2e-16
+## TypeCommunity (&gt;250 Beds)                -0.88802    0.08501 -10.446  &lt; 2e-16
+## TypeCommunity (125-250 Beds)             -0.53231    0.08768  -6.071 1.44e-09
+## TypeCritical Access                       1.54712    0.40426   3.827 0.000132
+## TypeMajor Teaching                       -0.87039    0.08888  -9.793  &lt; 2e-16
+## TypePediatric                            -1.04465    0.68967  -1.515 0.129956
+## Infection_c                               1.32459    0.06709  19.744  &lt; 2e-16
+## TypeCommunity (&gt;250 Beds):Infection_c    -0.90971    0.07007 -12.983  &lt; 2e-16
+## TypeCommunity (125-250 Beds):Infection_c -0.54896    0.07399  -7.419 1.54e-13
+## TypeCritical Access:Infection_c           1.43034    0.41718   3.429 0.000615
+## TypeMajor Teaching:Infection_c           -1.15620    0.06875 -16.817  &lt; 2e-16
+## TypePediatric:Infection_c                -0.70792    0.48704  -1.454 0.146186
+##                                             
+## (Intercept)                              ***
+## TypeCommunity (&gt;250 Beds)                ***
+## TypeCommunity (125-250 Beds)             ***
+## TypeCritical Access                      ***
+## TypeMajor Teaching                       ***
+## TypePediatric                               
+## Infection_c                              ***
+## TypeCommunity (&gt;250 Beds):Infection_c    ***
+## TypeCommunity (125-250 Beds):Infection_c ***
+## TypeCritical Access:Infection_c          ***
+## TypeMajor Teaching:Infection_c           ***
+## TypePediatric:Infection_c                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.182 on 2869 degrees of freedom
+## Multiple R-squared:  0.3596, Adjusted R-squared:  0.3572 
+## F-statistic: 146.5 on 11 and 2869 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p><em>By centering the mean of numeric response variable, it shows that when count of infection reaches average value in small community hospitals (&lt;125 beds) in 2017 California, the SRI is 1.75.</em></p>
+<p>Plot the regression using <code>ggplot()</code>. If your interaction is numeric by numeric, refer to code near the end of WS15 to make the plot. If you have 3 or more predictors, just chose two to plot for convenience. (7)</p>
+<pre class="r"><code>#Visualization of linear regression
+ggplot(SSI, aes(x = Infection, y = SIR, color = Type)) +
+  geom_point() + geom_smooth(method = &quot;lm&quot;)</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>Check assumptions of linearity, normality, and homoskedasticity either graphically or using a hypothesis test (3)</p>
+<pre class="r"><code>#Linearity Check
+resids&lt;-fit1$residuals
+fitvals&lt;-fit1$fitted.values
+ggplot()+geom_point(aes(fitvals,resids))+geom_hline(yintercept=0, color=&#39;red&#39;)</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-7-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Nomarlity Check
+ggplot()+geom_histogram(aes(resids), bins=20)</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-7-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p><em>Even by looking at the graphs of scatterplot or histogram, unfortunately, it is clear that neither the normality nor the linearity assumption was met.</em></p>
+<p>Regardless, recompute regression results with robust standard errors via <code>coeftest(..., vcov=vcovHC(...))</code>. Discuss significance of results, including any changes from before/after robust SEs if applicable. (7)</p>
+<pre class="r"><code>#robust standard errors
+coeftest(fit1, vcov=vcovHC(fit1,type=&quot;HC1&quot;))</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                                          Estimate Std. Error t value  Pr(&gt;|t|)
+## (Intercept)                               1.74629    0.17935  9.7366 &lt; 2.2e-16
+## TypeCommunity (&gt;250 Beds)                -0.88802    0.18280 -4.8579 1.250e-06
+## TypeCommunity (125-250 Beds)             -0.53231    0.19562 -2.7211  0.006546
+## TypeCritical Access                       1.54712    0.67471  2.2930  0.021920
+## TypeMajor Teaching                       -0.87039    0.18417 -4.7261 2.399e-06
+## TypePediatric                            -1.04465    0.17935 -5.8245 6.363e-09
+## Infection_c                               1.32459    0.21672  6.1120 1.117e-09
+## TypeCommunity (&gt;250 Beds):Infection_c    -0.90971    0.22234 -4.0915 4.405e-05
+## TypeCommunity (125-250 Beds):Infection_c -0.54896    0.23962 -2.2910  0.022036
+## TypeCritical Access:Infection_c           1.43034    0.64809  2.2070  0.027393
+## TypeMajor Teaching:Infection_c           -1.15620    0.21774 -5.3099 1.180e-07
+## TypePediatric:Infection_c                -0.70792    0.21672 -3.2665  0.001102
+##                                             
+## (Intercept)                              ***
+## TypeCommunity (&gt;250 Beds)                ***
+## TypeCommunity (125-250 Beds)             ** 
+## TypeCritical Access                      *  
+## TypeMajor Teaching                       ***
+## TypePediatric                            ***
+## Infection_c                              ***
+## TypeCommunity (&gt;250 Beds):Infection_c    ***
+## TypeCommunity (125-250 Beds):Infection_c *  
+## TypeCritical Access:Infection_c          *  
+## TypeMajor Teaching:Infection_c           ***
+## TypePediatric:Infection_c                ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><em>By using robust standard error, p-values for generally gets larger but still remains significant (except for pediatric hospitals type gains a considerably smaller p-value which makes it significant now), and therefore, we still reject all the null hypothesis.</em></p>
+<p>What proportion of the variation in the outcome does your model explain? (3)</p>
+<p><em>According to the fitted model, Multiple R-squared is 0.3596, which means 35.96% of variation in the response variable explained by the overall model.</em></p>
+</div>
+<div id="linear-regression-model-with-interaction" class="section level4">
+<h4>4. Linear Regression Model with interaction</h4>
+<p>Rerun same regression model (with interaction), but this time compute bootstrapped standard errors. Discuss any changes you observe in SEs and p-values using these SEs compared to the original SEs and the robust SEs)</p>
+<pre class="r"><code>#repeat 1000 times
+set.seed(123)
+samp_distn&lt;-replicate(1000, {
+ boot_SSI&lt;-SSI[sample(nrow(SSI),replace=TRUE),]
+ fit1 &lt;- lm( SIR~ Type*Infection_c, data=boot_SSI)
+ coef(fit1)
+})
+do.call(rbind, lapply(samp_distn, unlist))-&gt;samp_distn</code></pre>
+<pre><code>## Warning in (function (..., deparse.level = 1) : number of columns of result is
+## not a multiple of vector length (arg 31)</code></pre>
+<pre class="r"><code>#Estimated SEs
+samp_distn%&gt;%as.data.frame%&gt;%summarize_all(sd,na.rm=T)</code></pre>
+<pre><code>##   (Intercept) TypeCommunity (&gt;250 Beds) TypeCommunity (125-250 Beds)
+## 1    0.177689                 0.1798603                    0.1984628
+##   TypeCritical Access TypeMajor Teaching TypePediatric Infection_c
+## 1           0.8001316          0.1813546     0.7641666   0.5382833
+##   TypeCommunity (&gt;250 Beds):Infection_c
+## 1                             0.2337238
+##   TypeCommunity (125-250 Beds):Infection_c TypeCritical Access:Infection_c
+## 1                                0.5555598                       0.9467695
+##   TypeMajor Teaching:Infection_c TypePediatric:Infection_c
+## 1                      0.6710771                 0.2221732</code></pre>
+<p><em>The estimate SEs produced by 1000 times of bootstrapping generally gets even larger than robust standard errors, and therefore gives a closer original sample distribution. </em></p>
+</div>
+<div id="logistic-regression" class="section level4">
+<h4>5. Logistic Regression</h4>
+<p>Perform a logistic regression predicting a binary categorical variable (if you don’t have one, make/get one) from at least two explanatory variables (interaction not necessary).</p>
+<p>Interpret coefficient estimates in context (10)</p>
+<pre class="r"><code>#binary categorical variable
+SSI%&gt;%mutate(improvement=ifelse(SIR&gt;SIR_2015,1,0))-&gt;SSI
+SSI%&gt;%select(Type,Infection_c,improvement)-&gt;SSI2
+
+# logistic regression
+fit2 &lt;- glm(improvement ~ Type+Infection_c, data = SSI2, family = binomial(link = &quot;logit&quot;))
+coeftest(fit2)</code></pre>
+<pre><code>## 
+## z test of coefficients:
+## 
+##                               Estimate Std. Error z value  Pr(&gt;|z|)    
+## (Intercept)                  -0.641110   0.135965 -4.7153 2.414e-06 ***
+## TypeCommunity (&gt;250 Beds)    -0.101651   0.156677 -0.6488    0.5165    
+## TypeCommunity (125-250 Beds) -0.173733   0.161192 -1.0778    0.2811    
+## TypeCritical Access           0.263511   0.570331  0.4620    0.6441    
+## TypeMajor Teaching           -0.195235   0.166799 -1.1705    0.2418    
+## TypePediatric                -0.107780   1.455168 -0.0741    0.9410    
+## Infection_c                   0.830297   0.040443 20.5302 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>exp(coef(fit2))</code></pre>
+<pre><code>##                  (Intercept)    TypeCommunity (&gt;250 Beds) 
+##                    0.5267075                    0.9033445 
+## TypeCommunity (125-250 Beds)          TypeCritical Access 
+##                    0.8405215                    1.3014917 
+##           TypeMajor Teaching                TypePediatric 
+##                    0.8226411                    0.8978250 
+##                  Infection_c 
+##                    2.2940007</code></pre>
+<p><em>The effect is significant that odds of increasing SIR this comparing to 2015 for small community hospitals with average number of infection cases is 1.41 times of odds for large community hospitals, 0.996 times of odds for medium community hospitals, 1.21 times of odds for critical access hospitals, 1.80 times of odds for major teaching hospitals, and 1.45 times of odds for pediatric hospitals. When controlling for hospital type, each infection case added to the average number of infection would result in SRI increase of 0.83.</em></p>
+<p>Report a confusion matrix for your logistic regression (2)</p>
+<pre class="r"><code>#confusion matrix
+SSI2$prob &lt;- predict(fit2, type = &quot;response&quot;)
+table(predict=as.numeric(SSI2$prob&gt;.5),truth=SSI2$improvement)%&gt;%addmargins</code></pre>
+<pre><code>##        truth
+## predict    0    1  Sum
+##     0   1863  585 2448
+##     1    116  317  433
+##     Sum 1979  902 2881</code></pre>
+<p>Compute and discuss the Accuracy, Sensitivity (TPR), Specificity (TNR), and Recall (PPV) of your model (5)</p>
+<pre class="r"><code>#Accuracy
+(1863+317)/2881</code></pre>
+<pre><code>## [1] 0.7566817</code></pre>
+<pre class="r"><code>#Sensitivity (TPR)
+317/902</code></pre>
+<pre><code>## [1] 0.3514412</code></pre>
+<pre class="r"><code>#Specificity (TNR)
+1863/1979</code></pre>
+<pre><code>## [1] 0.9413845</code></pre>
+<pre class="r"><code>#Recall (PPV)
+317/433</code></pre>
+<pre><code>## [1] 0.7321016</code></pre>
+<p>Using ggplot, plot density of log-odds (logit) by your binary outcome variable (3)</p>
+<pre class="r"><code>#plot
+SSI2$logit&lt;-predict(fit2,type=&quot;link&quot;)
+SSI2$improvement_f&lt;-as.factor(SSI2$improvement)
+SSI2%&gt;%ggplot()+geom_density(aes(logit,color=improvement_f,fill=improvement_f), alpha=.4)+
+  geom_vline(xintercept=0)+xlab(&quot;predictor (logit)&quot;)</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-13-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>Generate an ROC curve (plot) and calculate AUC (either manually or with a package); interpret (10)</p>
+<pre class="r"><code>#ROC Curve
+ROCplot &lt;- ggplot(SSI2) + geom_roc(aes(d = improvement, m = prob),n.cuts = 0)
+ROCplot</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-14-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#AUC
+calc_auc(ROCplot)</code></pre>
+<pre><code>##   PANEL group       AUC
+## 1     1    -1 0.8979868</code></pre>
+<p><em>The AUC value is 0.898, which means that probability that a randomly selected hospital with an improved SIR from 2015 has a higher prediction than a randomly selected hospital without an improved SIR from 2015.</em></p>
+<p>Perform 10-fold (or repeated random sub-sampling) CV and report average out-of-sample Accuracy, Sensitivity, and Recall (10)</p>
+<pre class="r"><code>#function class_diag
+class_diag&lt;-function(probs,truth){
+ tab&lt;-table(factor(probs&gt;.5,levels=c(&quot;FALSE&quot;,&quot;TRUE&quot;)),truth)
+ acc=sum(diag(tab))/sum(tab)
+ sens=tab[2,2]/colSums(tab)[2]
+ spec=tab[1,1]/colSums(tab)[1]
+ ppv=tab[2,2]/rowSums(tab)[2]
+ if(is.numeric(truth)==FALSE &amp; is.logical(truth)==FALSE) truth&lt;-as.numeric(truth)-1
+ #CALCULATE EXACT AUC
+ ord&lt;-order(probs, decreasing=TRUE)
+ probs &lt;- probs[ord]; truth &lt;- truth[ord]
+ TPR=cumsum(truth)/max(1,sum(truth))
+ FPR=cumsum(!truth)/max(1,sum(!truth))
+ dup&lt;-c(probs[-1]&gt;=probs[-length(probs)], FALSE)
+ TPR&lt;-c(0,TPR[!dup],1); FPR&lt;-c(0,FPR[!dup],1)
+ n &lt;- length(TPR)
+ auc&lt;- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+ data.frame(acc,sens,spec,ppv,auc)
+} 
+
+#10-fold CV
+set.seed(1234)
+k = 10
+data1&lt;-SSI2[sample(nrow(SSI2)),]
+folds&lt;-cut(seq(1:nrow(SSI2)),breaks=k,labels=F)
+diags&lt;-NULL
+for(i in 1:k){
+ train&lt;-data1[folds!=i,]
+ test&lt;-data1[folds==i,]
+ truth&lt;-test$improvement
+ fit &lt;- glm(improvement ~ Type+Infection_c, data=SSI2, family=binomial(link=&quot;logit&quot;))
+ probs&lt;-predict(fit,newdata = test,type=&quot;response&quot;)
+ diags&lt;-rbind(diags,class_diag(probs,truth))
+}
+apply(diags,2,mean)</code></pre>
+<pre><code>##       acc      sens      spec       ppv       auc 
+## 0.7566753 0.3524740 0.9414462 0.7326847 0.8977708</code></pre>
+<p><em>After 10-fold CV, the acc, sens, spec, ppv, or auc didn’t make a noticeable difference from the simple logistic regression. It might be attributed to that the dataset with around 3000 entries is large enough to be representative.</em></p>
+</div>
+<div id="lasso-regression" class="section level4">
+<h4>6. LASSO Regression</h4>
+<p>Choose one variable you want to predict (can be one you used from before; either binary or continuous) and run a LASSO regression inputting all the rest of your variables as predictors. Choose lambda to give the simplest model whose accuracy is near that of the best (i.e., <code>lambda.1se</code>). Discuss which variables are retained.</p>
+<pre class="r"><code>#LASSO regression
+SSI%&gt;%select(-Infection_c)-&gt;SSI3
+fit3 &lt;- glm(improvement~ ., data =SSI3)
+y&lt;-as.matrix(SSI3$improvement)
+x &lt;- model.matrix(fit3)
+x &lt;- x[, -1]
+cv&lt;-cv.glmnet(x,y) 
+lasso &lt;- glmnet(x,y, lambda = cv$lambda.1se)
+coef(lasso)</code></pre>
+<pre><code>## 12 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                                              s0
+## (Intercept)                        1.838397e-01
+## Type_RiskCritical Access Hospital  .           
+## TypeCommunity (&gt;250 Beds)          .           
+## TypeCommunity (125-250 Beds)       .           
+## TypeCritical Access                .           
+## TypeMajor Teaching                 .           
+## TypePediatric                      .           
+## Procedure                          8.812576e-06
+## Infection                          3.703084e-02
+## Infection_P                        .           
+## SIR                                1.697557e-01
+## SIR_2015                          -7.224560e-02</code></pre>
+<pre class="r"><code># dataset preparation
+SSI3%&gt;%select(Procedure,Infection,Infection_P,SIR,SIR_2015,improvement)-&gt;SSI_lasso
+
+# logistric regression
+fit_lasso &lt;- glm(improvement ~ ., data = SSI_lasso)
+coeftest(fit_lasso)</code></pre>
+<pre><code>## 
+## z test of coefficients:
+## 
+##                Estimate  Std. Error  z value  Pr(&gt;|z|)    
+## (Intercept)  1.8892e-01  1.0664e-02  17.7162 &lt; 2.2e-16 ***
+## Procedure    1.3247e-04  2.8476e-05   4.6518 3.291e-06 ***
+## Infection    6.3575e-02  5.5813e-03  11.3908 &lt; 2.2e-16 ***
+## Infection_P -3.2624e-02  6.6964e-03  -4.8718 1.106e-06 ***
+## SIR          1.7031e-01  5.4720e-03  31.1235 &lt; 2.2e-16 ***
+## SIR_2015    -9.2417e-02  4.2624e-03 -21.6820 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><em>By running LASSO, it is shown that coefficients for number of procedure, number of infections, SIR, and SIR in 2015 are important.</em></p>
+<p>Perform 10-fold CV using this model: if response in binary, compare model’s out-of-sample accuracy to that of your logistic regression in part 5; if response is numeric, compare the residual standard error (at the bottom of the summary output, aka RMSE): lower is better fit!</p>
+<pre class="r"><code># 10-fold
+set.seed(1234)
+k = 10
+
+# rows&amp;folds
+data1 &lt;- SSI_lasso[sample(nrow(SSI_lasso)), ]
+folds &lt;- cut(seq(1:nrow(SSI_lasso)), breaks = k, labels = F)
+diags &lt;- NULL
+
+# test
+for (i in 1:k) {
+train &lt;- data1[folds != i, ]
+test &lt;- data1[folds == i, ]
+truth &lt;- test$improvement
+fit &lt;- glm(improvement ~ ., data = train)
+probs &lt;- predict(fit, newdata = test, type = &quot;response&quot;)
+diags &lt;- rbind(diags, class_diag(probs, truth))
+}
+apply(diags, 2, mean)</code></pre>
+<pre><code>##       acc      sens      spec       ppv       auc 
+## 0.8785071 0.6553826 0.9802094 0.9403225 0.9744637</code></pre>
+<p><em>By using only important variables, AUC increase from 0.898 from the previous 10-fold CV logic regression to 0.974 by selecting out LASSO important predictors. </em></p>
+</div>
+</div>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/docs.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script src="/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>
